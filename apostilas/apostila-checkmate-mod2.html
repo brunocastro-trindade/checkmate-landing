@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostila — Landing Page Checkmate Gestão · Módulo 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #C8102E;
+      --red-dk: #9e0d24;
+      --black:  #0D0D0D;
+      --white:  #FAFAFA;
+      --gray:   #F2F2F2;
+      --gray2:  #E4E4E4;
+      --gray3:  #A0A0A0;
+      --code-bg:#111518;
+      --code-txt:#e8eaf0;
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+      --font-mono:  'DM Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    @media print {
+      .no-print { display: none !important; }
+      .page-break { page-break-before: always; }
+      body { font-size: 13px; }
+      .cover { min-height: auto; padding: 60px 40px; }
+      .code-block { break-inside: avoid; }
+    }
+
+    /* ========== COVER ========== */
+    .cover {
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::before {
+      content: '♞';
+      position: absolute;
+      right: -40px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 420px;
+      opacity: 0.04;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    /* Diagonal accent stripe */
+    .cover::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 160px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(200,16,46,0.3), transparent);
+    }
+
+    .cover-bar { position: absolute; left:0; top:0; bottom:0; width:5px; background:var(--red); }
+
+    .cover-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cover-tag::after {
+      content: '';
+      height: 1px;
+      width: 60px;
+      background: var(--red);
+      opacity: 0.5;
+    }
+
+    .cover-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .cover-logo .knight { font-size: 52px; color: var(--red); line-height: 1; }
+    .cover-logo .brand { font-family: var(--font-serif); font-size: 28px; letter-spacing: 1px; }
+    .cover-logo .brand span { color: var(--red); }
+
+    .cover h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 1.08;
+      max-width: 700px;
+      margin-bottom: 24px;
+    }
+
+    .cover h1 em { color: var(--red); font-style: italic; }
+
+    .cover-desc {
+      font-size: 15px;
+      color: var(--gray3);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .cover-modules {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+
+    .cover-module-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .cover-module-item .mod-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--red);
+      min-width: 36px;
+    }
+
+    .cover-module-item.active { color: var(--white); }
+    .cover-module-item.active .mod-num { color: var(--red); }
+
+    .cover-meta {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 32px;
+    }
+
+    .cover-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .cover-meta-item .label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray3); font-family: var(--font-mono); }
+    .cover-meta-item .value { font-size: 14px; color: var(--white); font-weight: 500; }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-bar-section {
+      background: #111;
+      padding: 24px 60px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .pb-label { font-family: var(--font-mono); font-size: 11px; color: var(--gray3); white-space: nowrap; }
+    .pb-track { flex: 1; height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+    .pb-fill { height: 100%; background: var(--red); border-radius: 2px; width: 65%; }
+    .pb-pct { font-family: var(--font-mono); font-size: 11px; color: var(--red); white-space: nowrap; }
+
+    /* ========== INDEX ========== */
+    .index-section {
+      background: var(--gray);
+      padding: 64px 60px;
+      border-bottom: 1px solid var(--gray2);
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+    }
+
+    .index-section h2 { font-family: var(--font-serif); font-size: 36px; margin-bottom: 36px; }
+
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .index-card {
+      background: var(--white);
+      border: 1px solid var(--gray2);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .index-card:hover { border-color: var(--red); box-shadow: 0 4px 16px rgba(200,16,46,0.08); }
+    .index-num { font-family: var(--font-mono); font-size: 11px; color: var(--red); font-weight: 500; padding-top: 2px; min-width: 28px; }
+    .index-card-body .title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+    .index-card-body .sub { font-size: 12px; color: var(--gray3); line-height: 1.5; }
+
+    /* ========== CONTENT ========== */
+    .content { max-width: 900px; margin: 0 auto; padding: 0 40px; }
+
+    .module-header {
+      padding: 72px 0 40px;
+      border-bottom: 1px solid var(--gray2);
+      margin-bottom: 48px;
+    }
+
+    .module-num { font-family: var(--font-mono); font-size: 13px; color: var(--red); letter-spacing: 2px; margin-bottom: 10px; }
+
+    .module-header h2 { font-family: var(--font-serif); font-size: 42px; line-height: 1.15; margin-bottom: 12px; }
+    .module-header p { font-size: 15px; color: var(--gray3); max-width: 600px; }
+
+    h3 { font-family: var(--font-serif); font-size: 24px; margin: 40px 0 12px; }
+    h4 { font-weight: 600; font-size: 15px; margin: 28px 0 8px; letter-spacing: 0.3px; }
+    p { margin-bottom: 16px; color: #333; }
+    ul, ol { padding-left: 24px; margin-bottom: 16px; }
+    li { margin-bottom: 6px; color: #333; }
+    strong { color: var(--black); }
+
+    /* ========== CALLOUTS ========== */
+    .callout {
+      border-left: 3px solid var(--red);
+      background: #fff5f6;
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+
+    .callout.tip { border-color: #2563eb; background: #eff6ff; }
+    .callout.warn { border-color: #d97706; background: #fffbeb; }
+    .callout.green { border-color: #16a34a; background: #f0fdf4; }
+
+    .callout strong { display: block; margin-bottom: 6px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--red); }
+    .callout.tip strong { color: #2563eb; }
+    .callout.warn strong { color: #d97706; }
+    .callout.green strong { color: #16a34a; }
+
+    /* ========== CODE BLOCKS ========== */
+    .code-block {
+      background: var(--code-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 24px 0;
+      border: 1px solid #222;
+    }
+
+    .code-header {
+      background: #1a1e22;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #2a2e35;
+    }
+
+    .code-header .filename { font-family: var(--font-mono); font-size: 12px; color: #7a8a99; }
+    .code-header .lang-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: 4px; background: rgba(200,16,46,0.2); color: var(--red); letter-spacing: 1px; }
+    .code-dots { display: flex; gap: 6px; }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dot:nth-child(1) { background: #ff5f57; }
+    .code-dot:nth-child(2) { background: #febc2e; }
+    .code-dot:nth-child(3) { background: #28c840; }
+
+    pre {
+      padding: 20px;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--code-txt);
+      tab-size: 2;
+    }
+
+    .kw  { color: #c792ea; }
+    .tag { color: #80cbc4; }
+    .att { color: #ffcb6b; }
+    .str { color: #c3e88d; }
+    .cmt { color: #546e7a; font-style: italic; }
+    .sel { color: #80cbc4; }
+    .prp { color: #ffcb6b; }
+    .val { color: #c3e88d; }
+    .num { color: #f78c6c; }
+    .fn  { color: #82aaff; }
+    .var { color: #eeffff; }
+    .mq  { color: #c792ea; }
+
+    /* ========== CONCEPT & ANATOMY ========== */
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin: 20px 0 32px;
+    }
+
+    .concept-card {
+      background: var(--gray);
+      border-radius: 8px;
+      padding: 18px 16px;
+      border: 1px solid var(--gray2);
+    }
+
+    .concept-card .icon { font-size: 22px; margin-bottom: 10px; }
+    .concept-card .ct { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+    .concept-card p { font-size: 12px; color: var(--gray3); margin: 0; line-height: 1.5; }
+
+    /* ========== STEP ========== */
+    .step { display: flex; gap: 20px; margin: 24px 0; align-items: flex-start; }
+    .step-num {
+      min-width: 36px; height: 36px;
+      background: var(--red); color: white;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 600; font-size: 14px;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .step-body h4 { margin-top: 0; }
+
+    /* ========== BREAKPOINT TABLE ========== */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: 13.5px; }
+    th { background: var(--black); color: var(--white); padding: 10px 14px; text-align: left; font-weight: 500; font-size: 12px; letter-spacing: 0.5px; }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--gray2); }
+    tr:nth-child(even) td { background: var(--gray); }
+    td code { font-family: var(--font-mono); font-size: 12px; background: var(--gray2); padding: 2px 6px; border-radius: 4px; color: var(--red); }
+
+    /* ========== BREAKPOINT VISUAL ========== */
+    .bp-visual {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+
+    .bp-device {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bp-device .frame {
+      border: 2px solid var(--gray2);
+      border-radius: 6px;
+      background: var(--gray);
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 6px;
+      position: relative;
+    }
+
+    .bp-device.desktop .frame { width: 220px; height: 130px; }
+    .bp-device.tablet .frame  { width: 130px; height: 100px; border-radius: 8px; }
+    .bp-device.mobile .frame  { width: 72px;  height: 120px; border-radius: 12px; border-width: 3px; }
+
+    .bp-device.mobile .frame::before {
+      content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%);
+      width: 20px; height: 3px; background: var(--gray2); border-radius: 2px;
+    }
+
+    .bp-row { height: 8px; background: var(--gray2); border-radius: 3px; }
+    .bp-row.dark { background: #d0d0d0; }
+    .bp-row.red { background: rgba(200,16,46,0.3); }
+    .bp-row.full { width: 100%; }
+    .bp-row.half { width: 55%; }
+    .bp-row.third { width: 35%; }
+
+    .bp-cols { display: flex; gap: 3px; flex: 1; }
+    .bp-col { background: var(--gray2); border-radius: 3px; flex: 1; min-height: 30px; }
+    .bp-col.red { background: rgba(200,16,46,0.2); }
+
+    .bp-label { font-family: var(--font-mono); font-size: 10px; color: var(--gray3); text-align: center; }
+    .bp-px    { font-family: var(--font-mono); font-size: 11px; color: var(--red); font-weight: 500; text-align: center; }
+
+    /* ========== CHALLENGE ========== */
+    .challenge {
+      background: var(--black);
+      color: var(--white);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 32px 0;
+      border-left: 4px solid var(--red);
+    }
+
+    .challenge .ch-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+    .challenge h4 { color: var(--white); margin-top: 0; font-size: 16px; }
+    .challenge p, .challenge li { color: #aaa; font-size: 14px; }
+
+    /* ========== DIFF VIEW ========== */
+    .diff-block {
+      background: var(--code-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 24px 0;
+      border: 1px solid #222;
+    }
+
+    .diff-header {
+      background: #1a1e22;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #2a2e35;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #7a8a99;
+    }
+
+    .diff-header .diff-tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; background: rgba(200,16,46,0.2); color: var(--red); letter-spacing: 1px; }
+
+    .diff-pre {
+      padding: 20px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .diff-add { color: #c3e88d; background: rgba(195,232,141,0.06); display: block; padding: 0 8px; margin: 0 -8px; border-left: 3px solid #c3e88d; }
+    .diff-neutral { color: var(--code-txt); display: block; padding: 0 8px; margin: 0 -8px; border-left: 3px solid transparent; }
+    .diff-cmt { color: #546e7a; font-style: italic; }
+
+    /* ========== MEDIA QUERY DIAGRAM ========== */
+    .mq-diagram {
+      border: 1px solid var(--gray2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+
+    .mq-header {
+      background: var(--black);
+      padding: 12px 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--gray3);
+      border-bottom: 1px solid #222;
+    }
+
+    .mq-body {
+      display: flex;
+      border-bottom: 1px solid var(--gray2);
+    }
+
+    .mq-zone {
+      padding: 16px 20px;
+      flex: 1;
+      border-right: 1px dashed var(--gray2);
+      font-size: 13px;
+    }
+
+    .mq-zone:last-child { border-right: none; }
+    .mq-zone .mq-name { font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+    .mq-zone .mq-range { font-family: var(--font-mono); font-size: 11px; color: var(--red); margin-bottom: 8px; }
+    .mq-zone .mq-detail { font-size: 12px; color: var(--gray3); line-height: 1.5; }
+    .mq-zone.active { background: rgba(200,16,46,0.03); }
+
+    /* ========== INLINE CODE ========== */
+    ic {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      background: var(--gray2);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--red);
+    }
+
+    /* ========== DIVIDER ========== */
+    .divider { border: none; border-top: 1px solid var(--gray2); margin: 48px 0; }
+
+    /* ========== FOOTER ========== */
+    .apo-footer {
+      background: var(--black);
+      color: var(--gray3);
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+      margin-top: 80px;
+      font-family: var(--font-mono);
+    }
+
+    .apo-footer .fl { color: var(--red); }
+
+    @media (max-width: 768px) {
+      .cover, .index-section { padding: 48px 24px; }
+      .content { padding: 0 24px; }
+      .cover::before { font-size: 240px; right: -80px; }
+      .progress-bar-section { padding: 20px 24px; }
+      .apo-footer { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================================================
+     CAPA
+====================================================== -->
+<section class="cover" id="capa">
+  <div class="cover-bar"></div>
+
+  <div class="cover-tag">♞ Material de Aula · Módulo 2</div>
+
+  <div class="cover-logo">
+    <span class="knight">♞</span>
+    <span class="brand">Checkmate <span>Gestão</span></span>
+  </div>
+
+  <h1>Seções, <em>Rodapé</em><br />e <em>Responsividade</em></h1>
+
+  <p class="cover-desc">
+    Continuamos a construção da landing page — adicionamos as seções Sobre, Cases e Contato,
+    montamos o footer completo e aprendemos a deixar o site funcional em qualquer tamanho de tela.
+  </p>
+
+  <div class="cover-modules">
+    <div class="cover-module-item">
+      <span class="mod-num">MOD 01</span>
+      <span>Estrutura, Identidade Visual e Hero ✓</span>
+    </div>
+    <div class="cover-module-item active">
+      <span class="mod-num">MOD 02</span>
+      <span>Sobre · Cases · Contato · Footer · Responsivo ← você está aqui</span>
+    </div>
+    <div class="cover-module-item">
+      <span class="mod-num">MOD 03</span>
+      <span>Animações, JavaScript e Deploy</span>
+    </div>
+  </div>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="label">Tecnologias</span>
+      <span class="value">HTML5 · CSS3 · Media Queries</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Módulos</span>
+      <span class="value">08 — 13</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Pré-requisito</span>
+      <span class="value">Apostila Módulo 1 concluída</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     BARRA DE PROGRESSO
+====================================================== -->
+<div class="progress-bar-section no-print">
+  <span class="pb-label">Progresso do projeto</span>
+  <div class="pb-track"><div class="pb-fill"></div></div>
+  <span class="pb-pct">65% completo</span>
+</div>
+
+<!-- ======================================================
+     ÍNDICE
+====================================================== -->
+<section class="index-section" id="indice">
+  <div class="section-label">Conteúdo da aula</div>
+  <h2>O que vamos construir hoje</h2>
+
+  <div class="index-grid">
+    <a class="index-card" href="#mod8">
+      <span class="index-num">08</span>
+      <div class="index-card-body">
+        <div class="title">Seção Sobre</div>
+        <div class="sub">Layout em duas colunas com foto e texto da empresa</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod9">
+      <span class="index-num">09</span>
+      <div class="index-card-body">
+        <div class="title">Seção Cases</div>
+        <div class="sub">Cards de resultados reais com métricas de performance</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod10">
+      <span class="index-num">10</span>
+      <div class="index-card-body">
+        <div class="title">Seção Contato</div>
+        <div class="sub">Formulário com integração WhatsApp e estilo visual</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod11">
+      <span class="index-num">11</span>
+      <div class="index-card-body">
+        <div class="title">Footer</div>
+        <div class="sub">Rodapé com links, redes sociais e copyright</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod12">
+      <span class="index-num">12</span>
+      <div class="index-card-body">
+        <div class="title">Responsividade</div>
+        <div class="sub">Media queries para tablet e mobile — CSS adaptável</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod13">
+      <span class="index-num">13</span>
+      <div class="index-card-body">
+        <div class="title">Revisão do projeto</div>
+        <div class="sub">index.html completo com todas as seções conectadas</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ======================================================
+     CONTEÚDO
+====================================================== -->
+<div class="content">
+
+<!-- ======================================================
+     MÓDULO 8 — SOBRE
+====================================================== -->
+<section id="mod8">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 08</div>
+    <h2>Seção Sobre</h2>
+    <p>Uma seção de dois painéis — imagem à esquerda e conteúdo de texto à direita — que apresenta a empresa, a filosofia e os diferenciais.</p>
+  </div>
+
+  <h3>O que esta seção comunica</h3>
+  <p>A seção "Sobre" serve para <strong>humanizar a empresa</strong>. Depois de ver os serviços, o visitante quer saber quem está por trás. Vamos usar um layout em duas colunas com foto e texto, além de uma lista de diferenciais com ícones.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">📸</div>
+      <div class="ct">Coluna visual</div>
+      <p>Foto da equipe ou do espaço de trabalho. Gera confiança.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">✍️</div>
+      <div class="ct">Headline + texto</div>
+      <p>Proposta de identidade. Quem somos, o que nos motiva.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">✅</div>
+      <div class="ct">Diferenciais</div>
+      <p>Lista curta de vantagens competitivas com ícones.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🔢</div>
+      <div class="ct">Números</div>
+      <p>Dados de prova social: anos de experiência, projetos, etc.</p>
+    </div>
+  </div>
+
+  <h3>HTML da seção Sobre</h3>
+  <p>Adicione este bloco após a seção <ic>&lt;section class="services"&gt;</ic> no seu <ic>index.html</ic>:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">index.html — &lt;section class="about"&gt;</span>
+      <span class="lang-tag">HTML</span>
+    </div>
+<pre><span class="cmt">&lt;!-- SEÇÃO 3: SOBRE --&gt;</span>
+<span class="tag">&lt;section</span> <span class="att">class</span>=<span class="str">"about"</span> <span class="att">id</span>=<span class="str">"sobre"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"container about__inner"</span><span class="tag">&gt;</span>
+
+    <span class="cmt">&lt;!-- Coluna esquerda: imagem --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"about__media"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"about__image-wrap"</span><span class="tag">&gt;</span>
+        <span class="cmt">&lt;!-- Substitua pelo src da sua foto real --&gt;</span>
+        <span class="tag">&lt;img</span>
+          <span class="att">src</span>=<span class="str">"assets/images/sobre.jpg"</span>
+          <span class="att">alt</span>=<span class="str">"Equipe Checkmate Gestão"</span>
+          <span class="att">class</span>=<span class="str">"about__image"</span>
+        <span class="tag">/&gt;</span>
+        <span class="cmt">&lt;!-- Card de destaque flutuante --&gt;</span>
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"about__badge"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;strong&gt;</span>+3 anos<span class="tag">&lt;/strong&gt;</span>
+          <span class="tag">&lt;span&gt;</span>de experiência em tráfego<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+
+    <span class="cmt">&lt;!-- Coluna direita: texto --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"about__content"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"section-tag"</span><span class="tag">&gt;</span>Sobre nós<span class="tag">&lt;/span&gt;</span>
+
+      <span class="tag">&lt;h2</span> <span class="att">class</span>=<span class="str">"section-title"</span> <span class="att">style</span>=<span class="str">"text-align: left;"</span><span class="tag">&gt;</span>
+        Estratégia que vem de<br />quem entende o jogo.
+      <span class="tag">&lt;/h2&gt;</span>
+
+      <span class="tag">&lt;p</span> <span class="att">class</span>=<span class="str">"about__text"</span><span class="tag">&gt;</span>
+        A Checkmate Gestão nasceu da combinação entre
+        análise de dados e criatividade. Cada campanha é
+        tratada como uma partida de xadrez: planejada
+        com antecedência, executada com precisão e
+        ajustada em tempo real.
+      <span class="tag">&lt;/p&gt;</span>
+
+      <span class="cmt">&lt;!-- Lista de diferenciais --&gt;</span>
+      <span class="tag">&lt;ul</span> <span class="att">class</span>=<span class="str">"about__features"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;li&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"about__feature-icon"</span><span class="tag">&gt;</span>♟<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>Gestão estratégica de campanhas<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;p&gt;</span>Planejamento, execução e otimização contínua no Meta e Google Ads.<span class="tag">&lt;/p&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;li&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"about__feature-icon"</span><span class="tag">&gt;</span>♟<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>Criativos que convertem<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;p&gt;</span>Design e edição de vídeo focados em performance, não só estética.<span class="tag">&lt;/p&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/li&gt;</span>
+        <span class="tag">&lt;li&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"about__feature-icon"</span><span class="tag">&gt;</span>♟<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;div&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>Relatórios transparentes<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;p&gt;</span>Relatórios semanais com dados reais: custo, leads e ROAS.<span class="tag">&lt;/p&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/li&gt;</span>
+      <span class="tag">&lt;/ul&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/section&gt;</span></pre>
+  </div>
+
+  <h3>CSS — about.css</h3>
+  <p>Crie o arquivo <ic>css/about.css</ic> e adicione o link no <ic>&lt;head&gt;</ic> do index.html.</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">css/about.css</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* =============================================
+   ABOUT SECTION
+   ============================================= */</span>
+
+<span class="sel">.about</span> {
+  <span class="prp">padding</span>: <span class="val">var(--space-2xl) 0</span>;
+  <span class="prp">background-color</span>: <span class="val">var(--color-gray)</span>; <span class="cmt">/* alterna com o fundo branco dos serviços */</span>
+}
+
+<span class="sel">.about__inner</span> {
+  <span class="prp">display</span>: <span class="val">grid</span>;
+  <span class="prp">grid-template-columns</span>: <span class="val">1fr 1fr</span>;
+  <span class="prp">gap</span>: <span class="val">var(--space-xl)</span>;
+  <span class="prp">align-items</span>: <span class="val">center</span>;
+}
+
+<span class="cmt">/* --- Coluna da imagem --- */</span>
+<span class="sel">.about__image-wrap</span> {
+  <span class="prp">position</span>: <span class="val">relative</span>;
+}
+
+<span class="sel">.about__image</span> {
+  <span class="prp">width</span>: <span class="val">100%</span>;
+  <span class="prp">height</span>: <span class="val">480px</span>;
+  <span class="prp">object-fit</span>: <span class="val">cover</span>;        <span class="cmt">/* preenche o espaço sem distorcer */</span>
+  <span class="prp">border-radius</span>: <span class="val">var(--radius-lg)</span>;
+  <span class="prp">display</span>: <span class="val">block</span>;
+}
+
+<span class="cmt">/* --- Card flutuante sobre a imagem --- */</span>
+<span class="sel">.about__badge</span> {
+  <span class="prp">position</span>: <span class="val">absolute</span>;      <span class="cmt">/* posição relativa ao about__image-wrap */</span>
+  <span class="prp">bottom</span>: <span class="val">24px</span>;
+  <span class="prp">right</span>: <span class="val">-20px</span>;
+  <span class="prp">background</span>: <span class="val">var(--color-black)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-white)</span>;
+  <span class="prp">padding</span>: <span class="val">16px 20px</span>;
+  <span class="prp">border-radius</span>: <span class="val">var(--radius)</span>;
+  <span class="prp">box-shadow</span>: <span class="val">var(--shadow-lg)</span>;
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">flex-direction</span>: <span class="val">column</span>;
+  <span class="prp">gap</span>: <span class="val">2px</span>;
+  <span class="prp">min-width</span>: <span class="val">140px</span>;
+}
+
+<span class="sel">.about__badge strong</span> {
+  <span class="prp">font-family</span>: <span class="val">var(--font-title)</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-xl)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-primary)</span>;
+}
+
+<span class="sel">.about__badge span</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">color</span>: <span class="val">rgba(255, 255, 255, 0.6)</span>;
+}
+
+<span class="cmt">/* --- Coluna de texto --- */</span>
+<span class="sel">.about__text</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-lg)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-text)</span>;
+  <span class="prp">line-height</span>: <span class="val">1.8</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">var(--space-lg)</span>;
+}
+
+<span class="cmt">/* --- Lista de diferenciais --- */</span>
+<span class="sel">.about__features</span> {
+  <span class="prp">list-style</span>: <span class="val">none</span>;
+  <span class="prp">padding</span>: <span class="val">0</span>;
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">flex-direction</span>: <span class="val">column</span>;
+  <span class="prp">gap</span>: <span class="val">var(--space-md)</span>;
+}
+
+<span class="sel">.about__features li</span> {
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">gap</span>: <span class="val">14px</span>;
+  <span class="prp">align-items</span>: <span class="val">flex-start</span>;
+}
+
+<span class="sel">.about__feature-icon</span> {
+  <span class="prp">color</span>: <span class="val">var(--color-primary)</span>;
+  <span class="prp">font-size</span>: <span class="val">1.2rem</span>;
+  <span class="prp">margin-top</span>: <span class="val">3px</span>;
+  <span class="prp">flex-shrink</span>: <span class="val">0</span>;
+}
+
+<span class="sel">.about__features li strong</span> {
+  <span class="prp">display</span>: <span class="val">block</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-base)</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">2px</span>;
+}
+
+<span class="sel">.about__features li p</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-text-light)</span>;
+  <span class="prp">margin</span>: <span class="val">0</span>;
+}</pre>
+  </div>
+
+  <div class="callout">
+    <strong>🎯 Conceito: position absolute dentro de relative</strong>
+    O <ic>.about__badge</ic> usa <ic>position: absolute</ic> para flutuar sobre a imagem. Para isso funcionar, o elemento pai (<ic>.about__image-wrap</ic>) precisa ter <ic>position: relative</ic>. Isso cria um "contexto de posicionamento" — o absolute se posiciona relativo ao pai, não à tela inteira.
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 9 — CASES
+====================================================== -->
+<section id="mod9">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 09</div>
+    <h2>Seção Cases</h2>
+    <p>Cards que mostram resultados reais de clientes — com métricas, nicho e o serviço prestado. Prova social visual e objetiva.</p>
+  </div>
+
+  <h3>Por que cases de resultados funcionam?</h3>
+  <p>No marketing de performance, o cliente em potencial quer ver <strong>números reais</strong>. Um card bem construído com ROAS, custo por lead ou percentual de crescimento tem mais impacto do que qualquer texto descritivo.</p>
+
+  <h3>HTML da seção Cases</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">index.html — &lt;section class="cases"&gt;</span>
+      <span class="lang-tag">HTML</span>
+    </div>
+<pre><span class="cmt">&lt;!-- SEÇÃO 4: CASES --&gt;</span>
+<span class="tag">&lt;section</span> <span class="att">class</span>=<span class="str">"cases"</span> <span class="att">id</span>=<span class="str">"cases"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"container"</span><span class="tag">&gt;</span>
+
+    <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"section-header"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"section-tag"</span><span class="tag">&gt;</span>Cases reais<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;h2</span> <span class="att">class</span>=<span class="str">"section-title"</span><span class="tag">&gt;</span>Resultados que falam por si<span class="tag">&lt;/h2&gt;</span>
+      <span class="tag">&lt;p</span> <span class="att">class</span>=<span class="str">"section-subtitle"</span><span class="tag">&gt;</span>
+        Números reais de clientes reais.
+        Sem invenção, sem estimativas.
+      <span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+
+    <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"cases__grid"</span><span class="tag">&gt;</span>
+
+      <span class="cmt">&lt;!-- Case 1 --&gt;</span>
+      <span class="tag">&lt;article</span> <span class="att">class</span>=<span class="str">"case-card"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"case-card__header"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"case-card__niche"</span><span class="tag">&gt;</span>E-commerce · Moda<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"case-card__platform"</span><span class="tag">&gt;</span>Meta Ads<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;h3</span> <span class="att">class</span>=<span class="str">"case-card__title"</span><span class="tag">&gt;</span>Loja de roupas femininas<span class="tag">&lt;/h3&gt;</span>
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"case-card__metrics"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>4.2x<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>ROAS<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>R$ 8,40<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>Custo por venda<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>+210%<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>Crescimento em 90 dias<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;p</span> <span class="att">class</span>=<span class="str">"case-card__desc"</span><span class="tag">&gt;</span>
+          Reestruturamos as campanhas, criamos novos
+          criativos em vídeo e segmentamos públicos
+          lookalike. Em 3 meses, quadruplicamos o ROAS.
+        <span class="tag">&lt;/p&gt;</span>
+      <span class="tag">&lt;/article&gt;</span>
+
+      <span class="cmt">&lt;!-- Case 2 --&gt;</span>
+      <span class="tag">&lt;article</span> <span class="att">class</span>=<span class="str">"case-card"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"case-card__header"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"case-card__niche"</span><span class="tag">&gt;</span>Serviços · Odontologia<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"case-card__platform"</span><span class="tag">&gt;</span>Google Ads<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;h3</span> <span class="att">class</span>=<span class="str">"case-card__title"</span><span class="tag">&gt;</span>Clínica odontológica<span class="tag">&lt;/h3&gt;</span>
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"case-card__metrics"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>R$ 12,00<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>Custo por lead<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>143<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>Leads no 1º mês<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>68%<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>Taxa de agendamento<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;p</span> <span class="att">class</span>=<span class="str">"case-card__desc"</span><span class="tag">&gt;</span>
+          Estruturamos campanhas de Search com extensões
+          de chamada e localização. Resultado: agenda
+          lotada já no primeiro mês de gestão.
+        <span class="tag">&lt;/p&gt;</span>
+      <span class="tag">&lt;/article&gt;</span>
+
+      <span class="cmt">&lt;!-- Case 3 --&gt;</span>
+      <span class="tag">&lt;article</span> <span class="att">class</span>=<span class="str">"case-card"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"case-card__header"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"case-card__niche"</span><span class="tag">&gt;</span>Infoproduto · Cursos<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"case-card__platform case-card__platform--both"</span><span class="tag">&gt;</span>Meta + Google<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;h3</span> <span class="att">class</span>=<span class="str">"case-card__title"</span><span class="tag">&gt;</span>Curso online de finanças<span class="tag">&lt;/h3&gt;</span>
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"case-card__metrics"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>5.8x<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>ROAS<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>R$ 4,20<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>Custo por lead<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+          <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"metric"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;strong&gt;</span>R$ 47k<span class="tag">&lt;/strong&gt;</span>
+            <span class="tag">&lt;span&gt;</span>Faturamento no lançamento<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+        <span class="tag">&lt;p</span> <span class="att">class</span>=<span class="str">"case-card__desc"</span><span class="tag">&gt;</span>
+          Estratégia multi-plataforma com funil completo:
+          tráfego frio no Meta para captura + remarketing
+          no Google para conversão na página de vendas.
+        <span class="tag">&lt;/p&gt;</span>
+      <span class="tag">&lt;/article&gt;</span>
+
+    <span class="tag">&lt;/div&gt;</span>
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/section&gt;</span></pre>
+  </div>
+
+  <h3>CSS — cases.css</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">css/cases.css</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* =============================================
+   CASES SECTION
+   ============================================= */</span>
+
+<span class="sel">.cases</span> {
+  <span class="prp">padding</span>: <span class="val">var(--space-2xl) 0</span>;
+  <span class="prp">background-color</span>: <span class="val">var(--color-dark)</span>;  <span class="cmt">/* fundo escuro para destacar os cards */</span>
+}
+
+<span class="sel">.cases .section-tag</span>    { <span class="prp">color</span>: <span class="val">var(--color-primary)</span>; }
+<span class="sel">.cases .section-title</span>  { <span class="prp">color</span>: <span class="val">var(--color-white)</span>; }
+<span class="sel">.cases .section-subtitle</span> { <span class="prp">color</span>: <span class="val">rgba(255,255,255,0.5)</span>; }
+
+<span class="sel">.cases__grid</span> {
+  <span class="prp">display</span>: <span class="val">grid</span>;
+  <span class="prp">grid-template-columns</span>: <span class="val">repeat(3, 1fr)</span>;
+  <span class="prp">gap</span>: <span class="val">var(--space-md)</span>;
+}
+
+<span class="cmt">/* --- Card de case --- */</span>
+<span class="sel">.case-card</span> {
+  <span class="prp">background</span>: <span class="val">#1f1f1f</span>;
+  <span class="prp">border</span>: <span class="val">1px solid #2a2a2a</span>;
+  <span class="prp">border-radius</span>: <span class="val">var(--radius-lg)</span>;
+  <span class="prp">padding</span>: <span class="val">var(--space-lg)</span>;
+  <span class="prp">transition</span>: <span class="val">border-color 0.25s ease, transform 0.25s ease</span>;
+}
+
+<span class="sel">.case-card:hover</span> {
+  <span class="prp">border-color</span>: <span class="val">var(--color-primary)</span>;
+  <span class="prp">transform</span>: <span class="val">translateY(-4px)</span>;
+}
+
+<span class="cmt">/* --- Cabeçalho do card --- */</span>
+<span class="sel">.case-card__header</span> {
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">justify-content</span>: <span class="val">space-between</span>;
+  <span class="prp">align-items</span>: <span class="val">center</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">var(--space-md)</span>;
+}
+
+<span class="sel">.case-card__niche</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">color</span>: <span class="val">rgba(255,255,255,0.4)</span>;
+}
+
+<span class="sel">.case-card__platform</span> {
+  <span class="prp">font-family</span>: <span class="val">var(--font-title)</span>;
+  <span class="prp">font-size</span>: <span class="val">11px</span>;
+  <span class="prp">padding</span>: <span class="val">3px 10px</span>;
+  <span class="prp">border-radius</span>: <span class="val">100px</span>;
+  <span class="prp">background</span>: <span class="val">rgba(200,16,46,0.15)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-primary)</span>;
+  <span class="prp">border</span>: <span class="val">1px solid rgba(200,16,46,0.25)</span>;
+}
+
+<span class="sel">.case-card__platform--both</span> {
+  <span class="prp">background</span>: <span class="val">rgba(255,255,255,0.06)</span>;
+  <span class="prp">color</span>: <span class="val">rgba(255,255,255,0.7)</span>;
+  <span class="prp">border-color</span>: <span class="val">rgba(255,255,255,0.1)</span>;
+}
+
+<span class="sel">.case-card__title</span> {
+  <span class="prp">font-family</span>: <span class="val">var(--font-title)</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-lg)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-white)</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">var(--space-md)</span>;
+}
+
+<span class="cmt">/* --- Métricas em destaque --- */</span>
+<span class="sel">.case-card__metrics</span> {
+  <span class="prp">display</span>: <span class="val">grid</span>;
+  <span class="prp">grid-template-columns</span>: <span class="val">repeat(3, 1fr)</span>;
+  <span class="prp">gap</span>: <span class="val">1px</span>;
+  <span class="prp">background</span>: <span class="val">#2a2a2a</span>;     <span class="cmt">/* truque: o gap mostra o fundo como borda */</span>
+  <span class="prp">border-radius</span>: <span class="val">var(--radius)</span>;
+  <span class="prp">overflow</span>: <span class="val">hidden</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">var(--space-md)</span>;
+}
+
+<span class="sel">.metric</span> {
+  <span class="prp">background</span>: <span class="val">#1a1a1a</span>;
+  <span class="prp">padding</span>: <span class="val">12px 10px</span>;
+  <span class="prp">text-align</span>: <span class="val">center</span>;
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">flex-direction</span>: <span class="val">column</span>;
+  <span class="prp">gap</span>: <span class="val">2px</span>;
+}
+
+<span class="sel">.metric strong</span> {
+  <span class="prp">font-family</span>: <span class="val">var(--font-title)</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-xl)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-primary)</span>;
+  <span class="prp">line-height</span>: <span class="val">1</span>;
+}
+
+<span class="sel">.metric span</span> {
+  <span class="prp">font-size</span>: <span class="val">10px</span>;
+  <span class="prp">color</span>: <span class="val">rgba(255,255,255,0.35)</span>;
+  <span class="prp">text-transform</span>: <span class="val">uppercase</span>;
+  <span class="prp">letter-spacing</span>: <span class="val">0.5px</span>;
+  <span class="prp">line-height</span>: <span class="val">1.3</span>;
+}
+
+<span class="sel">.case-card__desc</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">color</span>: <span class="val">rgba(255,255,255,0.45)</span>;
+  <span class="prp">line-height</span>: <span class="val">1.7</span>;
+}</pre>
+  </div>
+
+  <div class="callout tip">
+    <strong>💡 Truque visual: gap como borda</strong>
+    Ao definir <ic>background: #2a2a2a</ic> no container e <ic>gap: 1px</ic> no grid, os espaços entre os filhos revelam o fundo do pai. Isso cria um efeito de grade/tabela sem precisar usar <ic>border</ic> em cada célula.
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 10 — CONTATO
+====================================================== -->
+<section id="mod10">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 10</div>
+    <h2>Seção Contato</h2>
+    <p>Formulário visual com envio direto para o WhatsApp via link — sem back-end necessário.</p>
+  </div>
+
+  <h3>Envio para WhatsApp — como funciona?</h3>
+  <p>O WhatsApp oferece um link especial no formato <ic>https://wa.me/55NUMERO?text=MENSAGEM</ic>. Podemos montar esse link dinamicamente com JavaScript, pegando os dados do formulário e codificando o texto com <ic>encodeURIComponent()</ic>.</p>
+
+  <div class="callout green">
+    <strong>✅ Vantagem desta abordagem</strong>
+    Não precisa de servidor, PHP, banco de dados ou serviço de e-mail. O visitante clica em "Enviar", o WhatsApp abre com a mensagem já preenchida. Simples, rápido e funcional para a fase inicial do negócio.
+  </div>
+
+  <h3>HTML da seção Contato</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">index.html — &lt;section class="contact"&gt;</span>
+      <span class="lang-tag">HTML</span>
+    </div>
+<pre><span class="cmt">&lt;!-- SEÇÃO 5: CONTATO --&gt;</span>
+<span class="tag">&lt;section</span> <span class="att">class</span>=<span class="str">"contact"</span> <span class="att">id</span>=<span class="str">"contato"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"container contact__inner"</span><span class="tag">&gt;</span>
+
+    <span class="cmt">&lt;!-- Lado esquerdo: chamada --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"contact__info"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"section-tag"</span><span class="tag">&gt;</span>Fale conosco<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;h2</span> <span class="att">class</span>=<span class="str">"section-title"</span> <span class="att">style</span>=<span class="str">"text-align:left;"</span><span class="tag">&gt;</span>
+        Pronto para<br />fazer o movimento<br />certo?
+      <span class="tag">&lt;/h2&gt;</span>
+      <span class="tag">&lt;p&gt;</span>
+        Preencha o formulário e entraremos em contato
+        em até 24 horas com uma análise gratuita
+        das suas campanhas atuais.
+      <span class="tag">&lt;/p&gt;</span>
+
+      <span class="cmt">&lt;!-- Lista de contato direto --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"contact__direct"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;a</span> <span class="att">href</span>=<span class="str">"https://wa.me/5547999999999"</span> <span class="att">class</span>=<span class="str">"contact__link"</span> <span class="att">target</span>=<span class="str">"_blank"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"contact__link-icon"</span><span class="tag">&gt;</span>📱<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;span&gt;</span>(47) 99999-9999<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;a</span> <span class="att">href</span>=<span class="str">"mailto:contato@checkmate.com.br"</span> <span class="att">class</span>=<span class="str">"contact__link"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;span</span> <span class="att">class</span>=<span class="str">"contact__link-icon"</span><span class="tag">&gt;</span>✉️<span class="tag">&lt;/span&gt;</span>
+          <span class="tag">&lt;span&gt;</span>contato@checkmate.com.br<span class="tag">&lt;/span&gt;</span>
+        <span class="tag">&lt;/a&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+
+    <span class="cmt">&lt;!-- Lado direito: formulário --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"contact__form-wrap"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;form</span> <span class="att">class</span>=<span class="str">"contact__form"</span> <span class="att">id</span>=<span class="str">"contactForm"</span><span class="tag">&gt;</span>
+
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"form-group"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;label</span> <span class="att">for</span>=<span class="str">"name"</span><span class="tag">&gt;</span>Seu nome<span class="tag">&lt;/label&gt;</span>
+          <span class="tag">&lt;input</span>
+            <span class="att">type</span>=<span class="str">"text"</span>
+            <span class="att">id</span>=<span class="str">"name"</span>
+            <span class="att">name</span>=<span class="str">"name"</span>
+            <span class="att">placeholder</span>=<span class="str">"Ex: João Silva"</span>
+            <span class="att">required</span>
+          <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"form-group"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;label</span> <span class="att">for</span>=<span class="str">"whatsapp"</span><span class="tag">&gt;</span>WhatsApp<span class="tag">&lt;/label&gt;</span>
+          <span class="tag">&lt;input</span>
+            <span class="att">type</span>=<span class="str">"tel"</span>
+            <span class="att">id</span>=<span class="str">"whatsapp"</span>
+            <span class="att">name</span>=<span class="str">"whatsapp"</span>
+            <span class="att">placeholder</span>=<span class="str">"(XX) 9XXXX-XXXX"</span>
+            <span class="att">required</span>
+          <span class="tag">/&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"form-group"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;label</span> <span class="att">for</span>=<span class="str">"service"</span><span class="tag">&gt;</span>Serviço de interesse<span class="tag">&lt;/label&gt;</span>
+          <span class="tag">&lt;select</span> <span class="att">id</span>=<span class="str">"service"</span> <span class="att">name</span>=<span class="str">"service"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;option</span> <span class="att">value</span>=<span class="str">""</span><span class="tag">&gt;</span>Selecione um serviço<span class="tag">&lt;/option&gt;</span>
+            <span class="tag">&lt;option</span> <span class="att">value</span>=<span class="str">"meta"</span><span class="tag">&gt;</span>Meta Ads (Facebook/Instagram)<span class="tag">&lt;/option&gt;</span>
+            <span class="tag">&lt;option</span> <span class="att">value</span>=<span class="str">"google"</span><span class="tag">&gt;</span>Google Ads<span class="tag">&lt;/option&gt;</span>
+            <span class="tag">&lt;option</span> <span class="att">value</span>=<span class="str">"criativos"</span><span class="tag">&gt;</span>Criação de Criativos<span class="tag">&lt;/option&gt;</span>
+            <span class="tag">&lt;option</span> <span class="att">value</span>=<span class="str">"video"</span><span class="tag">&gt;</span>Edição de Vídeos<span class="tag">&gt;</span>
+            <span class="tag">&lt;option</span> <span class="att">value</span>=<span class="str">"completo"</span><span class="tag">&gt;</span>Gestão Completa<span class="tag">&lt;/option&gt;</span>
+          <span class="tag">&lt;/select&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"form-group"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;label</span> <span class="att">for</span>=<span class="str">"message"</span><span class="tag">&gt;</span>Conte sobre seu negócio <span class="tag">&lt;span&gt;</span>(opcional)<span class="tag">&lt;/span&gt;&lt;/label&gt;</span>
+          <span class="tag">&lt;textarea</span>
+            <span class="att">id</span>=<span class="str">"message"</span>
+            <span class="att">name</span>=<span class="str">"message"</span>
+            <span class="att">rows</span>=<span class="str">"3"</span>
+            <span class="att">placeholder</span>=<span class="str">"Segmento, orçamento mensal, objetivo..."</span>
+          <span class="tag">&gt;&lt;/textarea&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+
+        <span class="tag">&lt;button</span> <span class="att">type</span>=<span class="str">"submit"</span> <span class="att">class</span>=<span class="str">"btn btn--primary btn--full"</span><span class="tag">&gt;</span>
+          Solicitar proposta gratuita →
+        <span class="tag">&lt;/button&gt;</span>
+
+      <span class="tag">&lt;/form&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/section&gt;</span></pre>
+  </div>
+
+  <h3>CSS — contact.css</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">css/contact.css</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* =============================================
+   CONTACT SECTION
+   ============================================= */</span>
+
+<span class="sel">.contact</span> {
+  <span class="prp">padding</span>: <span class="val">var(--space-2xl) 0</span>;
+  <span class="prp">background-color</span>: <span class="val">var(--color-white)</span>;
+}
+
+<span class="sel">.contact__inner</span> {
+  <span class="prp">display</span>: <span class="val">grid</span>;
+  <span class="prp">grid-template-columns</span>: <span class="val">1fr 1.4fr</span>; <span class="cmt">/* form um pouco maior */</span>
+  <span class="prp">gap</span>: <span class="val">var(--space-xl)</span>;
+  <span class="prp">align-items</span>: <span class="val">start</span>;
+}
+
+<span class="sel">.contact__info .section-title</span> { <span class="prp">text-align</span>: <span class="val">left</span>; <span class="prp">margin-bottom</span>: <span class="val">var(--space-md)</span>; }
+<span class="sel">.contact__info p</span> { <span class="prp">color</span>: <span class="val">var(--color-text-light)</span>; <span class="prp">margin-bottom</span>: <span class="val">var(--space-lg)</span>; }
+
+<span class="cmt">/* --- Links diretos --- */</span>
+<span class="sel">.contact__direct</span> {
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">flex-direction</span>: <span class="val">column</span>;
+  <span class="prp">gap</span>: <span class="val">var(--space-sm)</span>;
+}
+
+<span class="sel">.contact__link</span> {
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">align-items</span>: <span class="val">center</span>;
+  <span class="prp">gap</span>: <span class="val">10px</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-text)</span>;
+  <span class="prp">transition</span>: <span class="val">color 0.2s</span>;
+}
+
+<span class="sel">.contact__link:hover</span> { <span class="prp">color</span>: <span class="val">var(--color-primary)</span>; }
+<span class="sel">.contact__link-icon</span>  { <span class="prp">font-size</span>: <span class="val">1.1rem</span>; }
+
+<span class="cmt">/* --- Caixa do formulário --- */</span>
+<span class="sel">.contact__form-wrap</span> {
+  <span class="prp">background</span>: <span class="val">var(--color-gray)</span>;
+  <span class="prp">border</span>: <span class="val">1px solid var(--color-gray-2)</span>;
+  <span class="prp">border-radius</span>: <span class="val">var(--radius-lg)</span>;
+  <span class="prp">padding</span>: <span class="val">var(--space-lg)</span>;
+}
+
+<span class="cmt">/* --- Grupos de campo --- */</span>
+<span class="sel">.form-group</span> {
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">flex-direction</span>: <span class="val">column</span>;
+  <span class="prp">gap</span>: <span class="val">6px</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">var(--space-md)</span>;
+}
+
+<span class="sel">.form-group label</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">font-weight</span>: <span class="val">500</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-black)</span>;
+}
+
+<span class="sel">.form-group label span</span> { <span class="prp">color</span>: <span class="val">var(--color-text-light)</span>; <span class="prp">font-weight</span>: <span class="val">400</span>; }
+
+<span class="cmt">/* --- Campos de input, select e textarea --- */</span>
+<span class="sel">.contact__form input,
+.contact__form select,
+.contact__form textarea</span> {
+  <span class="prp">width</span>: <span class="val">100%</span>;
+  <span class="prp">padding</span>: <span class="val">0.7rem 1rem</span>;
+  <span class="prp">border</span>: <span class="val">1px solid var(--color-gray-2)</span>;
+  <span class="prp">border-radius</span>: <span class="val">var(--radius)</span>;
+  <span class="prp">font-family</span>: <span class="val">var(--font-body)</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">background</span>: <span class="val">var(--color-white)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-text)</span>;
+  <span class="prp">transition</span>: <span class="val">border-color 0.2s ease, box-shadow 0.2s ease</span>;
+  <span class="prp">outline</span>: <span class="val">none</span>;
+}
+
+<span class="cmt">/* Estado de foco: borda vermelha + sombra sutil */</span>
+<span class="sel">.contact__form input:focus,
+.contact__form select:focus,
+.contact__form textarea:focus</span> {
+  <span class="prp">border-color</span>: <span class="val">var(--color-primary)</span>;
+  <span class="prp">box-shadow</span>: <span class="val">0 0 0 3px rgba(200, 16, 46, 0.1)</span>;
+}
+
+<span class="sel">.contact__form textarea</span> {
+  <span class="prp">resize</span>: <span class="val">vertical</span>;  <span class="cmt">/* permite redimensionar só na vertical */</span>
+  <span class="prp">min-height</span>: <span class="val">90px</span>;
+}
+
+<span class="cmt">/* --- Botão de largura total --- */</span>
+<span class="sel">.btn--full</span> {
+  <span class="prp">width</span>: <span class="val">100%</span>;
+  <span class="prp">justify-content</span>: <span class="val">center</span>;
+  <span class="prp">padding</span>: <span class="val">0.85rem</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-base)</span>;
+}</pre>
+  </div>
+
+  <h3>JavaScript — link para WhatsApp</h3>
+  <p>Adicione este bloco <ic>&lt;script&gt;</ic> antes do <ic>&lt;/body&gt;</ic> no seu <ic>index.html</ic>. Ele intercepta o envio do formulário e abre o WhatsApp com os dados preenchidos:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">index.html — &lt;script&gt; antes de &lt;/body&gt;</span>
+      <span class="lang-tag">JS</span>
+    </div>
+<pre><span class="tag">&lt;script&gt;</span>
+  <span class="cmt">// Seleciona o formulário pelo id</span>
+  <span class="kw">const</span> <span class="var">form</span> = <span class="fn">document</span>.<span class="fn">getElementById</span>(<span class="str">'contactForm'</span>);
+
+  <span class="cmt">// Número do WhatsApp da empresa (código do país + DDD + número)</span>
+  <span class="kw">const</span> <span class="var">WHATSAPP_NUMBER</span> = <span class="str">'5547999999999'</span>; <span class="cmt">// ← troque pelo número real</span>
+
+  <span class="cmt">// Escuta o evento de submit do formulário</span>
+  <span class="var">form</span>.<span class="fn">addEventListener</span>(<span class="str">'submit'</span>, <span class="kw">function</span>(<span class="var">event</span>) {
+
+    <span class="cmt">// Impede o comportamento padrão (recarregar a página)</span>
+    <span class="var">event</span>.<span class="fn">preventDefault</span>();
+
+    <span class="cmt">// Pega os valores dos campos</span>
+    <span class="kw">const</span> <span class="var">name</span>    = <span class="fn">document</span>.<span class="fn">getElementById</span>(<span class="str">'name'</span>).<span class="var">value</span>;
+    <span class="kw">const</span> <span class="var">whatsapp</span> = <span class="fn">document</span>.<span class="fn">getElementById</span>(<span class="str">'whatsapp'</span>).<span class="var">value</span>;
+    <span class="kw">const</span> <span class="var">service</span>  = <span class="fn">document</span>.<span class="fn">getElementById</span>(<span class="str">'service'</span>).<span class="var">value</span>;
+    <span class="kw">const</span> <span class="var">message</span>  = <span class="fn">document</span>.<span class="fn">getElementById</span>(<span class="str">'message'</span>).<span class="var">value</span>;
+
+    <span class="cmt">// Monta o texto da mensagem</span>
+    <span class="kw">const</span> <span class="var">text</span> = <span class="str">`Olá! Meu nome é <span class="var">${name}</span>.
+WhatsApp: <span class="var">${whatsapp}</span>
+Interesse: <span class="var">${service || 'Não informado'}</span>
+Mensagem: <span class="var">${message || 'Sem mensagem adicional'}</span>`</span>;
+
+    <span class="cmt">// Codifica o texto para funcionar em URL</span>
+    <span class="kw">const</span> <span class="var">encodedText</span> = <span class="fn">encodeURIComponent</span>(<span class="var">text</span>);
+
+    <span class="cmt">// Abre o WhatsApp em nova aba</span>
+    <span class="kw">const</span> <span class="var">url</span> = <span class="str">`https://wa.me/<span class="var">${WHATSAPP_NUMBER}</span>?text=<span class="var">${encodedText}</span>`</span>;
+    <span class="fn">window</span>.<span class="fn">open</span>(<span class="var">url</span>, <span class="str">'_blank'</span>);
+  });
+<span class="tag">&lt;/script&gt;</span></pre>
+  </div>
+
+  <div class="callout">
+    <strong>🔍 Conceitos novos neste módulo</strong>
+    <strong style="display:inline;color:inherit;font-size:inherit;letter-spacing:0;text-transform:none;">addEventListener</strong> — escuta eventos (clique, submit, etc.) em um elemento.<br/>
+    <strong style="display:inline;color:inherit;font-size:inherit;letter-spacing:0;text-transform:none;">preventDefault()</strong> — cancela o comportamento padrão do navegador.<br/>
+    <strong style="display:inline;color:inherit;font-size:inherit;letter-spacing:0;text-transform:none;">encodeURIComponent()</strong> — converte texto em formato seguro para URL (espaços viram %20, etc.).<br/>
+    <strong style="display:inline;color:inherit;font-size:inherit;letter-spacing:0;text-transform:none;">template literals</strong> — strings com `` ` `` que permitem inserir variáveis com <ic>${variavel}</ic>.
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 11 — FOOTER
+====================================================== -->
+<section id="mod11">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 11</div>
+    <h2>Footer</h2>
+    <p>O rodapé com logo, colunas de links, redes sociais e copyright — fechamento profissional da página.</p>
+  </div>
+
+  <h3>HTML do Footer</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">index.html — &lt;footer&gt;</span>
+      <span class="lang-tag">HTML</span>
+    </div>
+<pre><span class="tag">&lt;footer</span> <span class="att">class</span>=<span class="str">"footer"</span><span class="tag">&gt;</span>
+  <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"container"</span><span class="tag">&gt;</span>
+
+    <span class="cmt">&lt;!-- Parte superior do footer --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"footer__top"</span><span class="tag">&gt;</span>
+
+      <span class="cmt">&lt;!-- Coluna da marca --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"footer__brand"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;a</span> <span class="att">href</span>=<span class="str">"#inicio"</span> <span class="att">class</span>=<span class="str">"footer__logo"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;span&gt;</span>♞<span class="tag">&lt;/span&gt;</span> Checkmate <span class="tag">&lt;strong&gt;</span>Gestão<span class="tag">&lt;/strong&gt;</span>
+        <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;p&gt;</span>
+          Tráfego pago com estratégia,<br />
+          criativos e resultados reais.
+        <span class="tag">&lt;/p&gt;</span>
+        <span class="cmt">&lt;!-- Redes sociais --&gt;</span>
+        <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"footer__socials"</span><span class="tag">&gt;</span>
+          <span class="tag">&lt;a</span> <span class="att">href</span>=<span class="str">"https://instagram.com/checkmate.gestao"</span> <span class="att">target</span>=<span class="str">"_blank"</span> <span class="att">aria-label</span>=<span class="str">"Instagram"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;img</span> <span class="att">src</span>=<span class="str">"assets/icons/instagram.svg"</span> <span class="att">alt</span>=<span class="str">"Instagram"</span> <span class="att">width</span>=<span class="str">"20"</span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;/a&gt;</span>
+          <span class="tag">&lt;a</span> <span class="att">href</span>=<span class="str">"https://wa.me/5547999999999"</span> <span class="att">target</span>=<span class="str">"_blank"</span> <span class="att">aria-label</span>=<span class="str">"WhatsApp"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;img</span> <span class="att">src</span>=<span class="str">"assets/icons/whatsapp.svg"</span> <span class="att">alt</span>=<span class="str">"WhatsApp"</span> <span class="att">width</span>=<span class="str">"20"</span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;/a&gt;</span>
+          <span class="tag">&lt;a</span> <span class="att">href</span>=<span class="str">"https://linkedin.com"</span> <span class="att">target</span>=<span class="str">"_blank"</span> <span class="att">aria-label</span>=<span class="str">"LinkedIn"</span><span class="tag">&gt;</span>
+            <span class="tag">&lt;img</span> <span class="att">src</span>=<span class="str">"assets/icons/linkedin.svg"</span> <span class="att">alt</span>=<span class="str">"LinkedIn"</span> <span class="att">width</span>=<span class="str">"20"</span><span class="tag">/&gt;</span>
+          <span class="tag">&lt;/a&gt;</span>
+        <span class="tag">&lt;/div&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+
+      <span class="cmt">&lt;!-- Coluna de links: Serviços --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"footer__col"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;h4&gt;</span>Serviços<span class="tag">&lt;/h4&gt;</span>
+        <span class="tag">&lt;ul&gt;</span>
+          <span class="tag">&lt;li&gt;&lt;a</span> <span class="att">href</span>=<span class="str">"#servicos"</span><span class="tag">&gt;</span>Meta Ads<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="tag">&lt;li&gt;&lt;a</span> <span class="att">href</span>=<span class="str">"#servicos"</span><span class="tag">&gt;</span>Google Ads<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="tag">&lt;li&gt;&lt;a</span> <span class="att">href</span>=<span class="str">"#servicos"</span><span class="tag">&gt;</span>Criação de Criativos<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="tag">&lt;li&gt;&lt;a</span> <span class="att">href</span>=<span class="str">"#servicos"</span><span class="tag">&gt;</span>Edição de Vídeos<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tag">&lt;/ul&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+
+      <span class="cmt">&lt;!-- Coluna de links: Empresa --&gt;</span>
+      <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"footer__col"</span><span class="tag">&gt;</span>
+        <span class="tag">&lt;h4&gt;</span>Empresa<span class="tag">&lt;/h4&gt;</span>
+        <span class="tag">&lt;ul&gt;</span>
+          <span class="tag">&lt;li&gt;&lt;a</span> <span class="att">href</span>=<span class="str">"#sobre"</span><span class="tag">&gt;</span>Sobre nós<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="tag">&lt;li&gt;&lt;a</span> <span class="att">href</span>=<span class="str">"#cases"</span><span class="tag">&gt;</span>Cases<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="tag">&lt;li&gt;&lt;a</span> <span class="att">href</span>=<span class="str">"#contato"</span><span class="tag">&gt;</span>Contato<span class="tag">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="tag">&lt;/ul&gt;</span>
+      <span class="tag">&lt;/div&gt;</span>
+
+    <span class="tag">&lt;/div&gt;</span>
+
+    <span class="cmt">&lt;!-- Parte inferior: copyright --&gt;</span>
+    <span class="tag">&lt;div</span> <span class="att">class</span>=<span class="str">"footer__bottom"</span><span class="tag">&gt;</span>
+      <span class="tag">&lt;span&gt;</span>© 2025 Checkmate Gestão. Todos os direitos reservados.<span class="tag">&lt;/span&gt;</span>
+      <span class="tag">&lt;span&gt;</span>Desenvolvido com HTML &amp; CSS ♞<span class="tag">&lt;/span&gt;</span>
+    <span class="tag">&lt;/div&gt;</span>
+
+  <span class="tag">&lt;/div&gt;</span>
+<span class="tag">&lt;/footer&gt;</span></pre>
+  </div>
+
+  <h3>CSS — footer.css</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">css/footer.css</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* =============================================
+   FOOTER
+   ============================================= */</span>
+
+<span class="sel">.footer</span> {
+  <span class="prp">background-color</span>: <span class="val">var(--color-black)</span>;
+  <span class="prp">color</span>: <span class="val">rgba(255, 255, 255, 0.6)</span>;
+  <span class="prp">padding-top</span>: <span class="val">var(--space-xl)</span>;
+}
+
+<span class="cmt">/* --- Layout da parte superior --- */</span>
+<span class="sel">.footer__top</span> {
+  <span class="prp">display</span>: <span class="val">grid</span>;
+  <span class="prp">grid-template-columns</span>: <span class="val">2fr 1fr 1fr</span>;  <span class="cmt">/* coluna da marca é 2x maior */</span>
+  <span class="prp">gap</span>: <span class="val">var(--space-xl)</span>;
+  <span class="prp">padding-bottom</span>: <span class="val">var(--space-xl)</span>;
+  <span class="prp">border-bottom</span>: <span class="val">1px solid rgba(255, 255, 255, 0.07)</span>;
+}
+
+<span class="cmt">/* --- Logo do footer --- */</span>
+<span class="sel">.footer__logo</span> {
+  <span class="prp">display</span>: <span class="val">inline-flex</span>;
+  <span class="prp">align-items</span>: <span class="val">center</span>;
+  <span class="prp">gap</span>: <span class="val">8px</span>;
+  <span class="prp">font-family</span>: <span class="val">var(--font-title)</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-lg)</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-white)</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">var(--space-md)</span>;
+}
+
+<span class="sel">.footer__logo span</span> { <span class="prp">color</span>: <span class="val">var(--color-primary)</span>; <span class="prp">font-size</span>: <span class="val">1.4rem</span>; }
+<span class="sel">.footer__logo strong</span> { <span class="prp">color</span>: <span class="val">var(--color-primary)</span>; }
+
+<span class="sel">.footer__brand p</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">line-height</span>: <span class="val">1.7</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">var(--space-md)</span>;
+}
+
+<span class="cmt">/* --- Ícones sociais --- */</span>
+<span class="sel">.footer__socials</span> {
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">gap</span>: <span class="val">12px</span>;
+}
+
+<span class="sel">.footer__socials a</span> {
+  <span class="prp">width</span>: <span class="val">36px</span>;
+  <span class="prp">height</span>: <span class="val">36px</span>;
+  <span class="prp">background</span>: <span class="val">rgba(255, 255, 255, 0.07)</span>;
+  <span class="prp">border-radius</span>: <span class="val">var(--radius)</span>;
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">align-items</span>: <span class="val">center</span>;
+  <span class="prp">justify-content</span>: <span class="val">center</span>;
+  <span class="prp">transition</span>: <span class="val">background 0.2s</span>;
+}
+
+<span class="sel">.footer__socials a:hover</span> { <span class="prp">background</span>: <span class="val">var(--color-primary)</span>; }
+
+<span class="cmt">/* --- Colunas de links --- */</span>
+<span class="sel">.footer__col h4</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">font-weight</span>: <span class="val">600</span>;
+  <span class="prp">color</span>: <span class="val">var(--color-white)</span>;
+  <span class="prp">margin-bottom</span>: <span class="val">var(--space-md)</span>;
+  <span class="prp">letter-spacing</span>: <span class="val">0.5px</span>;
+}
+
+<span class="sel">.footer__col ul</span> {
+  <span class="prp">list-style</span>: <span class="val">none</span>;
+  <span class="prp">padding</span>: <span class="val">0</span>;
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">flex-direction</span>: <span class="val">column</span>;
+  <span class="prp">gap</span>: <span class="val">10px</span>;
+}
+
+<span class="sel">.footer__col a</span> {
+  <span class="prp">font-size</span>: <span class="val">var(--text-sm)</span>;
+  <span class="prp">color</span>: <span class="val">rgba(255, 255, 255, 0.5)</span>;
+  <span class="prp">transition</span>: <span class="val">color 0.2s</span>;
+}
+
+<span class="sel">.footer__col a:hover</span> { <span class="prp">color</span>: <span class="val">var(--color-primary)</span>; }
+
+<span class="cmt">/* --- Barra de copyright --- */</span>
+<span class="sel">.footer__bottom</span> {
+  <span class="prp">display</span>: <span class="val">flex</span>;
+  <span class="prp">justify-content</span>: <span class="val">space-between</span>;
+  <span class="prp">align-items</span>: <span class="val">center</span>;
+  <span class="prp">padding</span>: <span class="val">var(--space-md) 0</span>;
+  <span class="prp">font-size</span>: <span class="val">12px</span>;
+  <span class="prp">color</span>: <span class="val">rgba(255, 255, 255, 0.25)</span>;
+  <span class="prp">flex-wrap</span>: <span class="val">wrap</span>;
+  <span class="prp">gap</span>: <span class="val">8px</span>;
+}</pre>
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 12 — RESPONSIVIDADE
+====================================================== -->
+<section id="mod12">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 12</div>
+    <h2>Responsividade</h2>
+    <p>Media queries CSS que adaptam o layout para tablets e celulares — sem quebrar o design visual.</p>
+  </div>
+
+  <h3>O que são Media Queries?</h3>
+  <p>Media queries são condições CSS que dizem: <em>"aplique esses estilos SOMENTE quando a tela tiver tal tamanho"</em>. Com elas, o mesmo arquivo HTML funciona em qualquer dispositivo.</p>
+
+  <h3>Breakpoints do projeto</h3>
+  <p>Vamos usar três faixas de tela:</p>
+
+  <div class="mq-diagram">
+    <div class="mq-header">Breakpoints da Checkmate Landing Page</div>
+    <div class="mq-body">
+      <div class="mq-zone active">
+        <div class="mq-name">Desktop</div>
+        <div class="mq-range">≥ 1024px</div>
+        <div class="mq-detail">Layout padrão. Todos os grids com múltiplas colunas.</div>
+      </div>
+      <div class="mq-zone">
+        <div class="mq-name">Tablet</div>
+        <div class="mq-range">768px – 1023px</div>
+        <div class="mq-detail">Grids de 4 colunas viram 2. Hero empilha vertical.</div>
+      </div>
+      <div class="mq-zone">
+        <div class="mq-name">Mobile</div>
+        <div class="mq-range">≤ 767px</div>
+        <div class="mq-detail">Tudo em coluna única. Navbar sem links visíveis.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Representação visual dos breakpoints</h3>
+
+  <div class="bp-visual">
+    <div class="bp-device desktop">
+      <div class="frame">
+        <div class="bp-row full dark"></div>
+        <div class="bp-cols">
+          <div class="bp-col red"></div>
+          <div class="bp-col"></div>
+        </div>
+        <div class="bp-cols">
+          <div class="bp-col"></div><div class="bp-col"></div>
+          <div class="bp-col"></div><div class="bp-col"></div>
+        </div>
+        <div class="bp-row full"></div>
+        <div class="bp-row half"></div>
+      </div>
+      <span class="bp-px">≥ 1024px</span>
+      <span class="bp-label">Desktop<br/>4 colunas</span>
+    </div>
+    <div class="bp-device tablet">
+      <div class="frame">
+        <div class="bp-row full dark"></div>
+        <div class="bp-cols">
+          <div class="bp-col red"></div>
+          <div class="bp-col"></div>
+        </div>
+        <div class="bp-cols">
+          <div class="bp-col"></div><div class="bp-col"></div>
+        </div>
+        <div class="bp-cols">
+          <div class="bp-col"></div><div class="bp-col"></div>
+        </div>
+      </div>
+      <span class="bp-px">768px–1023px</span>
+      <span class="bp-label">Tablet<br/>2 colunas</span>
+    </div>
+    <div class="bp-device mobile">
+      <div class="frame" style="gap:4px;">
+        <div class="bp-row full dark" style="margin-top:14px;"></div>
+        <div class="bp-col red" style="height:40px;"></div>
+        <div class="bp-col" style="height:20px;"></div>
+        <div class="bp-col" style="height:20px;"></div>
+        <div class="bp-col" style="height:20px;"></div>
+      </div>
+      <span class="bp-px">≤ 767px</span>
+      <span class="bp-label">Mobile<br/>1 coluna</span>
+    </div>
+  </div>
+
+  <h3>Sintaxe básica de media query</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">Sintaxe — como escrever</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* Estilos normais (sem media query) = desktop */</span>
+<span class="sel">.services__grid</span> {
+  <span class="prp">grid-template-columns</span>: <span class="val">repeat(4, 1fr)</span>;
+}
+
+<span class="cmt">/* Media query para tablet: tela menor que 1024px */</span>
+<span class="mq">@media</span> (<span class="prp">max-width</span>: <span class="val">1023px</span>) {
+  <span class="sel">.services__grid</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">repeat(2, 1fr)</span>;  <span class="cmt">/* 4 → 2 colunas */</span>
+  }
+}
+
+<span class="cmt">/* Media query para mobile: tela menor que 768px */</span>
+<span class="mq">@media</span> (<span class="prp">max-width</span>: <span class="val">767px</span>) {
+  <span class="sel">.services__grid</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">1fr</span>;            <span class="cmt">/* 2 → 1 coluna */</span>
+  }
+}</pre>
+  </div>
+
+  <div class="callout tip">
+    <strong>💡 Onde colocar as media queries?</strong>
+    Existem duas abordagens: (1) adicionar as media queries no final de cada arquivo CSS separado, ou (2) criar um único arquivo <ic>css/responsive.css</ic> com todas elas. Para este projeto, vamos criar um arquivo separado para organização.
+  </div>
+
+  <h3>responsive.css — arquivo completo</h3>
+  <p>Crie o arquivo <ic>css/responsive.css</ic> e adicione o link como <strong>último</strong> no <ic>&lt;head&gt;</ic> — ele deve sobrescrever os estilos anteriores.</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">css/responsive.css</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* =============================================
+   RESPONSIVE — Media Queries
+   Este arquivo SEMPRE deve ser o último link
+   no &lt;head&gt; do index.html
+   ============================================= */</span>
+
+
+<span class="cmt">/* ===========================================
+   TABLET — max-width: 1023px
+   =========================================== */</span>
+<span class="mq">@media</span> (<span class="prp">max-width</span>: <span class="val">1023px</span>) {
+
+  <span class="cmt">/* Navbar: oculta links, mantém logo e CTA */</span>
+  <span class="sel">.navbar__nav</span>  { <span class="prp">display</span>: <span class="val">none</span>; }
+
+  <span class="cmt">/* Hero: empilha as colunas */</span>
+  <span class="sel">.hero__inner</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">1fr</span>;
+    <span class="prp">text-align</span>: <span class="val">center</span>;
+  }
+
+  <span class="sel">.hero__subtitle</span>  { <span class="prp">max-width</span>: <span class="val">100%</span>; }
+  <span class="sel">.hero__actions</span>   { <span class="prp">justify-content</span>: <span class="val">center</span>; }
+  <span class="sel">.hero__stats</span>     { <span class="prp">justify-content</span>: <span class="val">center</span>; }
+  <span class="sel">.hero__image</span>     { <span class="prp">display</span>: <span class="val">none</span>; } <span class="cmt">/* esconde imagem no tablet */</span>
+
+  <span class="cmt">/* Serviços: 4 colunas → 2 colunas */</span>
+  <span class="sel">.services__grid</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">repeat(2, 1fr)</span>;
+  }
+
+  <span class="cmt">/* Sobre: empilha */</span>
+  <span class="sel">.about__inner</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">1fr</span>;
+  }
+
+  <span class="sel">.about__badge</span> { <span class="prp">right</span>: <span class="val">20px</span>; }
+
+  <span class="cmt">/* Cases: 3 colunas → 1 coluna */</span>
+  <span class="sel">.cases__grid</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">1fr</span>;
+    <span class="prp">max-width</span>: <span class="val">480px</span>;
+    <span class="prp">margin</span>: <span class="val">0 auto</span>;
+  }
+
+  <span class="cmt">/* Contato: empilha */</span>
+  <span class="sel">.contact__inner</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">1fr</span>;
+  }
+
+  <span class="cmt">/* Footer: reorganiza colunas */</span>
+  <span class="sel">.footer__top</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">1fr 1fr</span>;
+  }
+
+  <span class="sel">.footer__brand</span> {
+    <span class="prp">grid-column</span>: <span class="val">1 / -1</span>;  <span class="cmt">/* ocupa toda a largura */</span>
+  }
+}
+
+
+<span class="cmt">/* ===========================================
+   MOBILE — max-width: 767px
+   =========================================== */</span>
+<span class="mq">@media</span> (<span class="prp">max-width</span>: <span class="val">767px</span>) {
+
+  <span class="cmt">/* Tamanhos de fonte menores */</span>
+  <span class="sel">.hero__title</span>   { <span class="prp">font-size</span>: <span class="val">var(--text-3xl)</span>; }
+  <span class="sel">.section-title</span> { <span class="prp">font-size</span>: <span class="val">var(--text-2xl)</span>; }
+
+  <span class="cmt">/* Navbar: botão CTA menor */</span>
+  <span class="sel">.navbar__inner</span> { <span class="prp">height</span>: <span class="val">60px</span>; }
+  <span class="sel">.btn--primary</span> { <span class="prp">font-size</span>: <span class="val">12px</span>; <span class="prp">padding</span>: <span class="val">0.5rem 0.9rem</span>; }
+
+  <span class="cmt">/* Serviços: 2 → 1 coluna */</span>
+  <span class="sel">.services__grid</span> {
+    <span class="prp">grid-template-columns</span>: <span class="val">1fr</span>;
+  }
+
+  <span class="cmt">/* Hero: ajusta padding (navbar menor) */</span>
+  <span class="sel">.hero</span> {
+    <span class="prp">padding-top</span>: <span class="val">calc(60px + var(--space-xl))</span>;
+  }
+
+  <span class="cmt">/* Hero: ações empilhadas */</span>
+  <span class="sel">.hero__actions</span> {
+    <span class="prp">flex-direction</span>: <span class="val">column</span>;
+    <span class="prp">align-items</span>: <span class="val">center</span>;
+  }
+
+  <span class="sel">.btn--ghost, .btn--primary</span> { <span class="prp">width</span>: <span class="val">100%</span>; <span class="prp">justify-content</span>: <span class="val">center</span>; }
+
+  <span class="cmt">/* Stats do hero: scroll horizontal */</span>
+  <span class="sel">.hero__stats</span> {
+    <span class="prp">overflow-x</span>: <span class="val">auto</span>;
+    <span class="prp">padding-bottom</span>: <span class="val">8px</span>;
+  }
+
+  <span class="cmt">/* Sobre: reduz imagem */</span>
+  <span class="sel">.about__image</span>  { <span class="prp">height</span>: <span class="val">280px</span>; }
+  <span class="sel">.about__badge</span>  { <span class="prp">right</span>: <span class="val">12px</span>; <span class="prp">bottom</span>: <span class="val">12px</span>; }
+
+  <span class="cmt">/* Contato: form sem padding lateral extra */</span>
+  <span class="sel">.contact__form-wrap</span> { <span class="prp">padding</span>: <span class="val">var(--space-md)</span>; }
+
+  <span class="cmt">/* Footer: empilha tudo */</span>
+  <span class="sel">.footer__top</span>    { <span class="prp">grid-template-columns</span>: <span class="val">1fr</span>; }
+  <span class="sel">.footer__bottom</span> { <span class="prp">flex-direction</span>: <span class="val">column</span>; <span class="prp">text-align</span>: <span class="val">center</span>; }
+
+  <span class="cmt">/* Container: padding menor */</span>
+  <span class="sel">.container</span> { <span class="prp">padding</span>: <span class="val">0 var(--space-md)</span>; }
+}</pre>
+  </div>
+
+  <h3>Atualizar o &lt;head&gt; com os novos links</h3>
+  <p>Aqui está como o bloco completo de links CSS deve ficar no seu <ic>index.html</ic> ao final deste módulo:</p>
+
+  <div class="diff-block">
+    <div class="diff-header">
+      <span>index.html — bloco &lt;head&gt; atualizado</span>
+      <span class="diff-tag">DIFF</span>
+    </div>
+    <div class="diff-pre">
+<span class="diff-neutral">  <span class="diff-cmt">&lt;!-- CSS já existente (Módulo 1) --&gt;</span></span>
+<span class="diff-neutral">  &lt;link rel="stylesheet" href="css/global.css" /&gt;</span>
+<span class="diff-neutral">  &lt;link rel="stylesheet" href="css/navbar.css" /&gt;</span>
+<span class="diff-neutral">  &lt;link rel="stylesheet" href="css/hero.css" /&gt;</span>
+<span class="diff-neutral">  &lt;link rel="stylesheet" href="css/services.css" /&gt;</span>
+<span class="diff-add">  &lt;link rel="stylesheet" href="css/about.css" /&gt;     &lt;!-- novo --&gt;</span>
+<span class="diff-add">  &lt;link rel="stylesheet" href="css/cases.css" /&gt;     &lt;!-- novo --&gt;</span>
+<span class="diff-add">  &lt;link rel="stylesheet" href="css/contact.css" /&gt;   &lt;!-- novo --&gt;</span>
+<span class="diff-add">  &lt;link rel="stylesheet" href="css/footer.css" /&gt;    &lt;!-- novo --&gt;</span>
+<span class="diff-add">  &lt;link rel="stylesheet" href="css/responsive.css" /&gt; &lt;!-- sempre por último! --&gt;</span>
+    </div>
+  </div>
+
+  <div class="callout warn">
+    <strong>⚠️ Ordem importa!</strong>
+    O <ic>responsive.css</ic> sempre deve ser o último link. CSS é lido de cima para baixo — os estilos de baixo sobrescrevem os de cima quando há conflito. Se responsive.css vier antes, os outros arquivos vão anular as media queries.
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 13 — REVISÃO DO PROJETO
+====================================================== -->
+<section id="mod13">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 13</div>
+    <h2>Revisão do Projeto</h2>
+    <p>Checklist final, estrutura completa de arquivos e o index.html revisado com todas as seções conectadas.</p>
+  </div>
+
+  <h3>Estrutura final de arquivos</h3>
+
+  <div style="background:var(--code-bg);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:var(--font-mono);font-size:13px;line-height:2;color:var(--code-txt);border:1px solid #222;">
+<span style="color:#ffcb6b;">📁 checkmate-landing/</span>
+<br/><span style="color:#444;">│</span>
+<br/><span style="color:#444;">├── </span><span style="color:#80cbc4;">index.html</span><span style="color:#546e7a;">                  ← página completa</span>
+<br/><span style="color:#444;">│</span>
+<br/><span style="color:#444;">├── </span><span style="color:#ffcb6b;">📁 css/</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#80cbc4;">global.css</span><span style="color:#546e7a;">              ← reset e variáveis (MOD 1)</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#80cbc4;">navbar.css</span><span style="color:#546e7a;">              ← navegação (MOD 1)</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#80cbc4;">hero.css</span><span style="color:#546e7a;">                ← banner principal (MOD 1)</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#80cbc4;">services.css</span><span style="color:#546e7a;">            ← cards de serviços (MOD 1)</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#c3e88d;">about.css</span><span style="color:#546e7a;">               ← seção sobre (MOD 2) ✦</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#c3e88d;">cases.css</span><span style="color:#546e7a;">               ← cases de resultados (MOD 2) ✦</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#c3e88d;">contact.css</span><span style="color:#546e7a;">             ← formulário de contato (MOD 2) ✦</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#c3e88d;">footer.css</span><span style="color:#546e7a;">              ← rodapé (MOD 2) ✦</span>
+<br/><span style="color:#444;">│   └── </span><span style="color:#c3e88d;">responsive.css</span><span style="color:#546e7a;">          ← media queries (MOD 2) ✦ último!</span>
+<br/><span style="color:#444;">│</span>
+<br/><span style="color:#444;">└── </span><span style="color:#ffcb6b;">📁 assets/</span>
+<br/><span style="color:#444;">    ├── </span><span style="color:#ffcb6b;">📁 images/</span><span style="color:#546e7a;">            ← hero.jpg, sobre.jpg</span>
+<br/><span style="color:#444;">    └── </span><span style="color:#ffcb6b;">📁 icons/</span><span style="color:#546e7a;">             ← meta.svg, google.svg, instagram.svg...</span>
+  </div>
+
+  <h3>Ordem das seções no index.html</h3>
+  <p>O <ic>&lt;body&gt;</ic> do <ic>index.html</ic> deve ter esta sequência:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">index.html — &lt;body&gt; completo (estrutura)</span>
+      <span class="lang-tag">HTML</span>
+    </div>
+<pre><span class="tag">&lt;body&gt;</span>
+
+  <span class="cmt">&lt;!-- NAVEGAÇÃO (fixa) --&gt;</span>
+  <span class="tag">&lt;header</span> <span class="att">class</span>=<span class="str">"navbar"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/header&gt;</span>
+
+  <span class="tag">&lt;main&gt;</span>
+
+    <span class="cmt">&lt;!-- SEÇÃO 1: HERO --&gt;</span>
+    <span class="tag">&lt;section</span> <span class="att">class</span>=<span class="str">"hero"</span> <span class="att">id</span>=<span class="str">"inicio"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/section&gt;</span>
+
+    <span class="cmt">&lt;!-- SEÇÃO 2: SERVIÇOS --&gt;</span>
+    <span class="tag">&lt;section</span> <span class="att">class</span>=<span class="str">"services"</span> <span class="att">id</span>=<span class="str">"servicos"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/section&gt;</span>
+
+    <span class="cmt">&lt;!-- SEÇÃO 3: SOBRE --&gt;</span>
+    <span class="tag">&lt;section</span> <span class="att">class</span>=<span class="str">"about"</span> <span class="att">id</span>=<span class="str">"sobre"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/section&gt;</span>
+
+    <span class="cmt">&lt;!-- SEÇÃO 4: CASES --&gt;</span>
+    <span class="tag">&lt;section</span> <span class="att">class</span>=<span class="str">"cases"</span> <span class="att">id</span>=<span class="str">"cases"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/section&gt;</span>
+
+    <span class="cmt">&lt;!-- SEÇÃO 5: CONTATO --&gt;</span>
+    <span class="tag">&lt;section</span> <span class="att">class</span>=<span class="str">"contact"</span> <span class="att">id</span>=<span class="str">"contato"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/section&gt;</span>
+
+  <span class="tag">&lt;/main&gt;</span>
+
+  <span class="cmt">&lt;!-- RODAPÉ --&gt;</span>
+  <span class="tag">&lt;footer</span> <span class="att">class</span>=<span class="str">"footer"</span><span class="tag">&gt;</span>...<span class="tag">&lt;/footer&gt;</span>
+
+  <span class="cmt">&lt;!-- JAVASCRIPT (sempre antes de fechar o body) --&gt;</span>
+  <span class="tag">&lt;script&gt;</span>
+    <span class="cmt">// Código JS do formulário aqui</span>
+  <span class="tag">&lt;/script&gt;</span>
+
+<span class="tag">&lt;/body&gt;</span></pre>
+  </div>
+
+  <h3>✅ Checklist final</h3>
+
+  <table>
+    <thead>
+      <tr><th>Item</th><th>Verificar</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Estrutura de pastas</td><td>Pastas <ic>css/</ic> e <ic>assets/images/</ic> e <ic>assets/icons/</ic> criadas</td></tr>
+      <tr><td>Links CSS no &lt;head&gt;</td><td>9 arquivos CSS linkados, responsive.css por último</td></tr>
+      <tr><td>Variáveis CSS</td><td>Todas as cores e fontes usando <ic>var(--...)</ic></td></tr>
+      <tr><td>Navbar</td><td>Logo com ♞, links âncora funcionando, botão CTA</td></tr>
+      <tr><td>Hero</td><td>Headline, subtítulo, 2 botões, estatísticas visíveis</td></tr>
+      <tr><td>Serviços</td><td>4 cards com ícone, título e descrição</td></tr>
+      <tr><td>Sobre</td><td>Foto + texto + lista de diferenciais + badge flutuante</td></tr>
+      <tr><td>Cases</td><td>3 cards com métricas e descrição</td></tr>
+      <tr><td>Contato</td><td>Formulário com 4 campos e botão + JS do WhatsApp</td></tr>
+      <tr><td>Footer</td><td>Logo, 2 colunas de links, ícones sociais, copyright</td></tr>
+      <tr><td>Responsividade</td><td>Testado em 375px, 768px e 1440px de largura</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <strong>💡 Como testar responsividade no Chrome</strong>
+    Abra o site no Chrome, pressione <strong>F12</strong> para abrir o DevTools, depois clique no ícone de celular/tablet no topo esquerdo (ou pressione <strong>Ctrl+Shift+M</strong>). Selecione dispositivos como "iPhone SE", "iPad" ou arraste a borda para qualquer largura.
+  </div>
+
+  <hr class="divider" />
+
+  <div class="challenge">
+    <div class="ch-label">✦ O que vem no Módulo 3</div>
+    <h4>Animações, JavaScript e Deploy</h4>
+    <ul>
+      <li><strong>Animações de entrada</strong> com <ic>@keyframes</ic> e <ic>IntersectionObserver</ic> — elementos surgem ao rolar</li>
+      <li><strong>Menu hamburguer</strong> em JavaScript — botão que abre/fecha a nav no mobile</li>
+      <li><strong>Navbar com scroll</strong> — muda de transparente para sólida ao descer a página</li>
+      <li><strong>Deploy gratuito</strong> — publicar o site no Vercel ou Netlify com arrasta-e-solta, sem precisar de servidor</li>
+      <li><strong>Domínio personalizado</strong> — conectar o site ao domínio <ic>checkmate.com.br</ic></li>
+    </ul>
+  </div>
+</section>
+
+</div><!-- end .content -->
+
+<footer class="apo-footer">
+  <span>♞ <span class="fl">Checkmate Gestão</span> — Material de Aula</span>
+  <span>Módulo 02 · Seções · Footer · Responsividade</span>
+  <span style="color:#555;">Próximo módulo: Animações, JS e Deploy</span>
+</footer>
+
+</body>
+</html>
