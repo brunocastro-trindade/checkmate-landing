@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apostila — Landing Page Checkmate Gestão · Módulo 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #C8102E;
+      --red-dk: #9e0d24;
+      --black:  #0D0D0D;
+      --white:  #FAFAFA;
+      --gray:   #F2F2F2;
+      --gray2:  #E4E4E4;
+      --gray3:  #A0A0A0;
+      --code-bg:#111518;
+      --code-txt:#e8eaf0;
+      --font-serif: 'DM Serif Display', Georgia, serif;
+      --font-sans:  'Inter', system-ui, sans-serif;
+      --font-mono:  'DM Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    @media print {
+      .no-print { display: none !important; }
+      body { font-size: 13px; }
+      .cover { min-height: auto; padding: 60px 40px; }
+      .code-block, .diff-block { break-inside: avoid; }
+      .module-header { break-before: page; }
+    }
+
+    /* ========== COVER ========== */
+    .cover {
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover-chess-bg {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(8, 1fr);
+      opacity: 0.025;
+      pointer-events: none;
+    }
+
+    .cover-chess-bg span:nth-child(odd) { background: var(--white); }
+
+    .cover-bar { position: absolute; left:0; top:0; bottom:0; width:5px; background:var(--red); }
+
+    .cover-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .cover-tag::after { content: ''; height: 1px; width: 60px; background: var(--red); opacity: 0.5; }
+
+    .cover-logo { display: flex; align-items: center; gap: 14px; margin-bottom: 40px; }
+    .cover-logo .knight { font-size: 52px; color: var(--red); line-height: 1; }
+    .cover-logo .brand { font-family: var(--font-serif); font-size: 28px; letter-spacing: 1px; }
+    .cover-logo .brand span { color: var(--red); }
+
+    .cover h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 1.08;
+      max-width: 700px;
+      margin-bottom: 24px;
+    }
+
+    .cover h1 em { color: var(--red); font-style: italic; }
+
+    .cover-desc {
+      font-size: 15px;
+      color: var(--gray3);
+      max-width: 520px;
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .cover-modules {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 48px;
+    }
+
+    .cover-module-item { display: flex; align-items: center; gap: 14px; font-size: 14px; color: rgba(255,255,255,0.4); }
+    .cover-module-item .mod-num { font-family: var(--font-mono); font-size: 11px; color: var(--gray3); min-width: 36px; }
+    .cover-module-item.done { color: rgba(255,255,255,0.3); text-decoration: line-through; text-decoration-color: rgba(255,255,255,0.2); }
+    .cover-module-item.done .mod-num { color: rgba(255,255,255,0.2); }
+    .cover-module-item.active { color: var(--white); }
+    .cover-module-item.active .mod-num { color: var(--red); }
+
+    .cover-meta {
+      display: flex; gap: 40px; flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 32px;
+    }
+
+    .cover-meta-item { display: flex; flex-direction: column; gap: 4px; }
+    .cover-meta-item .label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray3); font-family: var(--font-mono); }
+    .cover-meta-item .value { font-size: 14px; color: var(--white); font-weight: 500; }
+
+    /* ========== PROGRESS BAR ========== */
+    .progress-bar-section {
+      background: #111; padding: 24px 60px;
+      display: flex; align-items: center; gap: 24px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+
+    .pb-label { font-family: var(--font-mono); font-size: 11px; color: var(--gray3); white-space: nowrap; }
+    .pb-track { flex: 1; height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
+    .pb-fill   { height: 100%; background: var(--red); border-radius: 2px; width: 100%; }
+    .pb-pct    { font-family: var(--font-mono); font-size: 11px; color: var(--red); white-space: nowrap; }
+
+    /* ========== INDEX ========== */
+    .index-section { background: var(--gray); padding: 64px 60px; border-bottom: 1px solid var(--gray2); }
+    .section-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+    .index-section h2 { font-family: var(--font-serif); font-size: 36px; margin-bottom: 36px; }
+
+    .index-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+
+    .index-card {
+      background: var(--white); border: 1px solid var(--gray2); border-radius: 8px;
+      padding: 20px; display: flex; gap: 14px; align-items: flex-start;
+      text-decoration: none; color: inherit; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .index-card:hover { border-color: var(--red); box-shadow: 0 4px 16px rgba(200,16,46,0.08); }
+    .index-num { font-family: var(--font-mono); font-size: 11px; color: var(--red); font-weight: 500; padding-top: 2px; min-width: 28px; }
+    .index-card-body .title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+    .index-card-body .sub { font-size: 12px; color: var(--gray3); line-height: 1.5; }
+
+    /* ========== CONTENT ========== */
+    .content { max-width: 900px; margin: 0 auto; padding: 0 40px; }
+
+    .module-header { padding: 72px 0 40px; border-bottom: 1px solid var(--gray2); margin-bottom: 48px; }
+    .module-num { font-family: var(--font-mono); font-size: 13px; color: var(--red); letter-spacing: 2px; margin-bottom: 10px; }
+    .module-header h2 { font-family: var(--font-serif); font-size: 42px; line-height: 1.15; margin-bottom: 12px; }
+    .module-header p { font-size: 15px; color: var(--gray3); max-width: 600px; }
+
+    h3 { font-family: var(--font-serif); font-size: 24px; margin: 40px 0 12px; }
+    h4 { font-weight: 600; font-size: 15px; margin: 28px 0 8px; letter-spacing: 0.3px; }
+    p { margin-bottom: 16px; color: #333; }
+    ul, ol { padding-left: 24px; margin-bottom: 16px; }
+    li { margin-bottom: 6px; color: #333; }
+    strong { color: var(--black); }
+
+    /* ========== CALLOUTS ========== */
+    .callout { border-left: 3px solid var(--red); background: #fff5f6; border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 24px 0; font-size: 14px; }
+    .callout.tip { border-color: #2563eb; background: #eff6ff; }
+    .callout.warn { border-color: #d97706; background: #fffbeb; }
+    .callout.green { border-color: #16a34a; background: #f0fdf4; }
+    .callout strong { display: block; margin-bottom: 6px; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--red); }
+    .callout.tip strong { color: #2563eb; }
+    .callout.warn strong { color: #d97706; }
+    .callout.green strong { color: #16a34a; }
+
+    /* ========== CODE BLOCKS ========== */
+    .code-block { background: var(--code-bg); border-radius: 10px; overflow: hidden; margin: 24px 0; border: 1px solid #222; }
+
+    .code-header { background: #1a1e22; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2a2e35; }
+    .code-header .filename { font-family: var(--font-mono); font-size: 12px; color: #7a8a99; }
+    .code-header .lang-tag { font-family: var(--font-mono); font-size: 10px; padding: 2px 8px; border-radius: 4px; background: rgba(200,16,46,0.2); color: var(--red); letter-spacing: 1px; }
+    .code-header .lang-tag.js { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .code-header .lang-tag.bash { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .code-dots { display: flex; gap: 6px; }
+    .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .code-dot:nth-child(1) { background: #ff5f57; }
+    .code-dot:nth-child(2) { background: #febc2e; }
+    .code-dot:nth-child(3) { background: #28c840; }
+
+    pre { padding: 20px; overflow-x: auto; font-family: var(--font-mono); font-size: 13px; line-height: 1.75; color: var(--code-txt); tab-size: 2; }
+
+    /* Syntax colors */
+    .kw  { color: #c792ea; }
+    .tag { color: #80cbc4; }
+    .att { color: #ffcb6b; }
+    .str { color: #c3e88d; }
+    .cmt { color: #546e7a; font-style: italic; }
+    .sel { color: #80cbc4; }
+    .prp { color: #ffcb6b; }
+    .val { color: #c3e88d; }
+    .num { color: #f78c6c; }
+    .fn  { color: #82aaff; }
+    .var { color: #eeffff; }
+    .mq  { color: #c792ea; }
+    .cls { color: #ffcb6b; }
+    .met { color: #82aaff; }
+    .boo { color: #f78c6c; }
+
+    /* ========== CONCEPT GRID ========== */
+    .concept-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; margin: 20px 0 32px; }
+    .concept-card { background: var(--gray); border-radius: 8px; padding: 18px 16px; border: 1px solid var(--gray2); }
+    .concept-card .icon { font-size: 22px; margin-bottom: 10px; }
+    .concept-card .ct { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+    .concept-card p { font-size: 12px; color: var(--gray3); margin: 0; line-height: 1.5; }
+
+    /* ========== STEP ========== */
+    .step { display: flex; gap: 20px; margin: 24px 0; align-items: flex-start; }
+    .step-num { min-width: 36px; height: 36px; background: var(--red); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+    .step-body h4 { margin-top: 0; }
+
+    /* ========== CHALLENGE ========== */
+    .challenge { background: var(--black); color: var(--white); border-radius: 10px; padding: 24px 28px; margin: 32px 0; border-left: 4px solid var(--red); }
+    .challenge .ch-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+    .challenge h4 { color: var(--white); margin-top: 0; font-size: 16px; }
+    .challenge p, .challenge li { color: #aaa; font-size: 14px; }
+
+    /* ========== DIFF BLOCK ========== */
+    .diff-block { background: var(--code-bg); border-radius: 10px; overflow: hidden; margin: 24px 0; border: 1px solid #222; }
+    .diff-header { background: #1a1e22; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #2a2e35; font-family: var(--font-mono); font-size: 12px; color: #7a8a99; }
+    .diff-header .diff-tag { font-size: 10px; padding: 2px 8px; border-radius: 4px; background: rgba(200,16,46,0.2); color: var(--red); letter-spacing: 1px; }
+    .diff-pre { padding: 20px; font-family: var(--font-mono); font-size: 13px; line-height: 1.75; }
+    .diff-add { color: #c3e88d; background: rgba(195,232,141,0.06); display: block; padding: 0 8px; margin: 0 -8px; border-left: 3px solid #c3e88d; }
+    .diff-rem { color: #f07178; background: rgba(240,113,120,0.06); display: block; padding: 0 8px; margin: 0 -8px; border-left: 3px solid #f07178; }
+    .diff-neutral { color: var(--code-txt); display: block; padding: 0 8px; margin: 0 -8px; border-left: 3px solid transparent; }
+    .diff-cmt { color: #546e7a; font-style: italic; }
+
+    /* ========== INLINE CODE ========== */
+    ic { font-family: var(--font-mono); font-size: 12px; background: var(--gray2); padding: 2px 6px; border-radius: 4px; color: var(--red); }
+
+    /* ========== ANIMATION DIAGRAM ========== */
+    .anim-timeline {
+      border: 1px solid var(--gray2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 24px 0;
+    }
+
+    .at-header {
+      background: var(--black);
+      padding: 12px 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--gray3);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .at-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      gap: 16px;
+      border-top: 1px solid var(--gray2);
+      font-size: 13px;
+    }
+
+    .at-row:nth-child(even) { background: var(--gray); }
+
+    .at-name { min-width: 160px; font-weight: 500; font-size: 13px; }
+    .at-bar-wrap { flex: 1; height: 8px; background: var(--gray2); border-radius: 4px; position: relative; }
+    .at-bar { height: 100%; border-radius: 4px; background: var(--red); position: absolute; opacity: 0.75; }
+    .at-delay { font-family: var(--font-mono); font-size: 11px; color: var(--gray3); min-width: 50px; text-align: right; }
+
+    /* ========== DEPLOY CARDS ========== */
+    .deploy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 24px 0 32px; }
+
+    .deploy-card {
+      border: 1px solid var(--gray2);
+      border-radius: 10px;
+      padding: 24px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .deploy-card:hover { border-color: var(--red); box-shadow: 0 4px 16px rgba(200,16,46,0.08); }
+
+    .deploy-card .dc-logo { font-size: 28px; margin-bottom: 12px; }
+    .deploy-card .dc-name { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+    .deploy-card .dc-desc { font-size: 13px; color: var(--gray3); margin-bottom: 16px; line-height: 1.5; }
+    .deploy-card .dc-pros { list-style: none; padding: 0; }
+    .deploy-card .dc-pros li { font-size: 13px; color: #444; margin-bottom: 6px; padding-left: 18px; position: relative; }
+    .deploy-card .dc-pros li::before { content: '✓'; position: absolute; left: 0; color: #16a34a; font-weight: 700; }
+    .deploy-card .dc-tag { display: inline-block; margin-top: 14px; font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 4px; background: rgba(200,16,46,0.1); color: var(--red); letter-spacing: 1px; }
+
+    /* ========== FLOW DIAGRAM ========== */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-step {
+      background: var(--gray);
+      border: 1px solid var(--gray2);
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      min-width: 110px;
+    }
+
+    .flow-step .fs-icon { font-size: 20px; display: block; margin-bottom: 4px; }
+    .flow-step .fs-label { font-size: 11px; color: var(--gray3); display: block; margin-top: 2px; font-weight: 400; }
+
+    .flow-arrow {
+      font-size: 20px;
+      color: var(--red);
+      padding: 0 8px;
+      font-weight: 300;
+    }
+
+    /* ========== TABLE ========== */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0 28px; font-size: 13.5px; }
+    th { background: var(--black); color: var(--white); padding: 10px 14px; text-align: left; font-weight: 500; font-size: 12px; letter-spacing: 0.5px; }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--gray2); }
+    tr:nth-child(even) td { background: var(--gray); }
+    td code { font-family: var(--font-mono); font-size: 12px; background: var(--gray2); padding: 2px 6px; border-radius: 4px; color: var(--red); }
+
+    /* ========== DIVIDER ========== */
+    .divider { border: none; border-top: 1px solid var(--gray2); margin: 48px 0; }
+
+    /* ========== FINAL BADGE ========== */
+    .final-badge {
+      background: var(--black);
+      border-radius: 16px;
+      padding: 48px;
+      text-align: center;
+      margin: 48px 0;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #222;
+    }
+
+    .final-badge::before {
+      content: '♞';
+      position: absolute;
+      font-size: 300px;
+      opacity: 0.03;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      line-height: 1;
+    }
+
+    .final-badge .fb-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 16px; }
+    .final-badge h3 { font-family: var(--font-serif); font-size: 36px; color: var(--white); margin: 0 0 12px; }
+    .final-badge p { color: var(--gray3); font-size: 15px; max-width: 500px; margin: 0 auto 24px; line-height: 1.7; }
+    .final-badge .fb-url { font-family: var(--font-mono); font-size: 14px; color: var(--red); background: rgba(200,16,46,0.1); padding: 10px 20px; border-radius: 6px; border: 1px solid rgba(200,16,46,0.25); display: inline-block; }
+
+    /* ========== FOOTER ========== */
+    .apo-footer { background: var(--black); color: var(--gray3); padding: 32px 60px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; font-size: 12px; margin-top: 80px; font-family: var(--font-mono); }
+    .apo-footer .fl { color: var(--red); }
+
+    @media (max-width: 768px) {
+      .cover, .index-section { padding: 48px 24px; }
+      .content { padding: 0 24px; }
+      .progress-bar-section { padding: 20px 24px; }
+      .deploy-grid { grid-template-columns: 1fr; }
+      .flow { gap: 4px; }
+      .apo-footer { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ======================================================
+     CAPA
+====================================================== -->
+<section class="cover" id="capa">
+  <!-- Tabuleiro de xadrez como fundo -->
+  <div class="cover-chess-bg">
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const bg = document.querySelector('.cover-chess-bg');
+        for (let i = 0; i < 64; i++) {
+          const s = document.createElement('span');
+          bg.appendChild(s);
+        }
+      });
+    </script>
+  </div>
+
+  <div class="cover-bar"></div>
+
+  <div class="cover-tag">♞ Material de Aula · Módulo 3 · Final</div>
+
+  <div class="cover-logo">
+    <span class="knight">♞</span>
+    <span class="brand">Checkmate <span>Gestão</span></span>
+  </div>
+
+  <h1><em>Animações</em>,<br />JavaScript<br />e <em>Deploy</em></h1>
+
+  <p class="cover-desc">
+    O módulo final da série. Damos vida à landing page com animações de entrada,
+    menu hamburguer funcional, efeito de scroll na navbar — e publicamos o site
+    online com domínio próprio, de graça.
+  </p>
+
+  <div class="cover-modules">
+    <div class="cover-module-item done">
+      <span class="mod-num">MOD 01</span>
+      <span>Estrutura, Identidade Visual e Hero</span>
+    </div>
+    <div class="cover-module-item done">
+      <span class="mod-num">MOD 02</span>
+      <span>Sobre · Cases · Contato · Footer · Responsivo</span>
+    </div>
+    <div class="cover-module-item active">
+      <span class="mod-num">MOD 03</span>
+      <span>Animações · JavaScript · Deploy ← você está aqui</span>
+    </div>
+  </div>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="label">Tecnologias</span>
+      <span class="value">CSS Animations · JS Vanilla · Vercel</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Módulos</span>
+      <span class="value">14 — 19</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="label">Resultado</span>
+      <span class="value">Site publicado online ✓</span>
+    </div>
+  </div>
+</section>
+
+<!-- BARRA DE PROGRESSO -->
+<div class="progress-bar-section no-print">
+  <span class="pb-label">Progresso do projeto</span>
+  <div class="pb-track"><div class="pb-fill"></div></div>
+  <span class="pb-pct">100% — projeto completo</span>
+</div>
+
+<!-- ======================================================
+     ÍNDICE
+====================================================== -->
+<section class="index-section" id="indice">
+  <div class="section-label">Conteúdo da aula</div>
+  <h2>O que vamos construir hoje</h2>
+
+  <div class="index-grid">
+    <a class="index-card" href="#mod14">
+      <span class="index-num">14</span>
+      <div class="index-card-body">
+        <div class="title">Animações CSS</div>
+        <div class="sub">@keyframes, transitions e efeitos de entrada com animation-delay</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod15">
+      <span class="index-num">15</span>
+      <div class="index-card-body">
+        <div class="title">Scroll Reveal</div>
+        <div class="sub">IntersectionObserver: elementos surgem ao rolar a página</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod16">
+      <span class="index-num">16</span>
+      <div class="index-card-body">
+        <div class="title">Navbar com Scroll</div>
+        <div class="sub">Header que muda de aparência ao descer a página</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod17">
+      <span class="index-num">17</span>
+      <div class="index-card-body">
+        <div class="title">Menu Hamburguer</div>
+        <div class="sub">Botão que abre e fecha a navegação no mobile</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod18">
+      <span class="index-num">18</span>
+      <div class="index-card-body">
+        <div class="title">Arquivo app.js</div>
+        <div class="sub">Organizando todo o JavaScript em um arquivo separado</div>
+      </div>
+    </a>
+    <a class="index-card" href="#mod19">
+      <span class="index-num">19</span>
+      <div class="index-card-body">
+        <div class="title">Deploy e Publicação</div>
+        <div class="sub">Colocar o site no ar com Vercel ou Netlify em 5 minutos</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ======================================================
+     CONTEÚDO
+====================================================== -->
+<div class="content">
+
+<!-- ======================================================
+     MÓDULO 14 — ANIMAÇÕES CSS
+====================================================== -->
+<section id="mod14">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 14</div>
+    <h2>Animações CSS</h2>
+    <p>Como usar <ic>@keyframes</ic> e <ic>animation</ic> para dar vida à página — sem uma linha de JavaScript.</p>
+  </div>
+
+  <h3>Dois tipos de movimento no CSS</h3>
+  <p>Antes de programar qualquer animação, é importante entender a diferença entre as duas ferramentas do CSS para movimento:</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">🔀</div>
+      <div class="ct">transition</div>
+      <p>Suaviza a mudança entre dois estados. Acionada por eventos como <ic>:hover</ic> ou adição de classe via JS. Já usamos nos botões e cards.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🎬</div>
+      <div class="ct">@keyframes + animation</div>
+      <p>Define uma sequência de estados com nome próprio. Roda automaticamente, pode repetir, pausar e ter delay. Ideal para entradas e efeitos contínuos.</p>
+    </div>
+  </div>
+
+  <h3>Anatomia de uma animação CSS</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">Sintaxe — @keyframes e animation</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* PASSO 1: Definir os quadros da animação com @keyframes */</span>
+<span class="mq">@keyframes</span> <span class="fn">fadeUp</span> {
+  <span class="kw">from</span> {                       <span class="cmt">/* estado inicial */</span>
+    <span class="prp">opacity</span>: <span class="val">0</span>;
+    <span class="prp">transform</span>: <span class="val">translateY(30px)</span>;
+  }
+  <span class="kw">to</span> {                         <span class="cmt">/* estado final */</span>
+    <span class="prp">opacity</span>: <span class="val">1</span>;
+    <span class="prp">transform</span>: <span class="val">translateY(0)</span>;
+  }
+}
+
+<span class="cmt">/* PASSO 2: Aplicar a animação a um elemento */</span>
+<span class="sel">.hero__title</span> {
+  <span class="prp">animation-name</span>:           <span class="val">fadeUp</span>;  <span class="cmt">/* nome do @keyframes */</span>
+  <span class="prp">animation-duration</span>:       <span class="val">0.7s</span>;    <span class="cmt">/* quanto tempo dura */</span>
+  <span class="prp">animation-timing-function</span>: <span class="val">ease-out</span>; <span class="cmt">/* curva de velocidade */</span>
+  <span class="prp">animation-delay</span>:          <span class="val">0.1s</span>;    <span class="cmt">/* esperar antes de iniciar */</span>
+  <span class="prp">animation-fill-mode</span>:      <span class="val">both</span>;    <span class="cmt">/* manter estado final */</span>
+
+  <span class="cmt">/* Forma abreviada (shorthand): */</span>
+  <span class="prp">animation</span>: <span class="val">fadeUp 0.7s ease-out 0.1s both</span>;
+}</pre>
+  </div>
+
+  <div class="callout">
+    <strong>🎯 O que é animation-fill-mode: both?</strong>
+    Sem esse valor, o elemento aparece no estado normal antes do delay e volta ao estado inicial depois de terminar. Com <ic>both</ic>, ele fica no estado inicial (<ic>from</ic>) durante o delay e fica no estado final (<ic>to</ic>) depois de terminar — que é o comportamento que queremos em 99% dos casos.
+  </div>
+
+  <h3>Arquivo animations.css — entrada do hero com cascata</h3>
+  <p>Crie o arquivo <ic>css/animations.css</ic>. A ideia é que os elementos do hero entrem em sequência — cada um com um <ic>animation-delay</ic> um pouco maior que o anterior, criando um efeito cascata elegante.</p>
+
+  <div class="anim-timeline">
+    <div class="at-header">
+      <span>Sequência de entrada — Seção Hero</span>
+      <span>0s → 1.4s</span>
+    </div>
+    <div class="at-row">
+      <span class="at-name">.hero__tag</span>
+      <div class="at-bar-wrap"><div class="at-bar" style="left:0%;width:22%;"></div></div>
+      <span class="at-delay">delay 0s</span>
+    </div>
+    <div class="at-row">
+      <span class="at-name">.hero__title</span>
+      <div class="at-bar-wrap"><div class="at-bar" style="left:14%;width:22%;"></div></div>
+      <span class="at-delay">delay 0.2s</span>
+    </div>
+    <div class="at-row">
+      <span class="at-name">.hero__subtitle</span>
+      <div class="at-bar-wrap"><div class="at-bar" style="left:28%;width:22%;"></div></div>
+      <span class="at-delay">delay 0.4s</span>
+    </div>
+    <div class="at-row">
+      <span class="at-name">.hero__actions</span>
+      <div class="at-bar-wrap"><div class="at-bar" style="left:43%;width:22%;"></div></div>
+      <span class="at-delay">delay 0.6s</span>
+    </div>
+    <div class="at-row">
+      <span class="at-name">.hero__stats</span>
+      <div class="at-bar-wrap"><div class="at-bar" style="left:57%;width:22%;"></div></div>
+      <span class="at-delay">delay 0.8s</span>
+    </div>
+    <div class="at-row">
+      <span class="at-name">.hero__image</span>
+      <div class="at-bar-wrap"><div class="at-bar" style="left:71%;width:22%;"></div></div>
+      <span class="at-delay">delay 0.3s</span>
+    </div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">css/animations.css</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* =============================================
+   ANIMATIONS
+   css/animations.css
+   Adicionar link no head ANTES de responsive.css
+   ============================================= */</span>
+
+<span class="cmt">/* --- Keyframes reutilizáveis --- */</span>
+
+<span class="mq">@keyframes</span> <span class="fn">fadeUp</span> {
+  <span class="kw">from</span> { <span class="prp">opacity</span>: <span class="val">0</span>; <span class="prp">transform</span>: <span class="val">translateY(28px)</span>; }
+  <span class="kw">to</span>   { <span class="prp">opacity</span>: <span class="val">1</span>; <span class="prp">transform</span>: <span class="val">translateY(0)</span>; }
+}
+
+<span class="mq">@keyframes</span> <span class="fn">fadeIn</span> {
+  <span class="kw">from</span> { <span class="prp">opacity</span>: <span class="val">0</span>; }
+  <span class="kw">to</span>   { <span class="prp">opacity</span>: <span class="val">1</span>; }
+}
+
+<span class="mq">@keyframes</span> <span class="fn">slideRight</span> {
+  <span class="kw">from</span> { <span class="prp">opacity</span>: <span class="val">0</span>; <span class="prp">transform</span>: <span class="val">translateX(-24px)</span>; }
+  <span class="kw">to</span>   { <span class="prp">opacity</span>: <span class="val">1</span>; <span class="prp">transform</span>: <span class="val">translateX(0)</span>; }
+}
+
+<span class="mq">@keyframes</span> <span class="fn">scaleIn</span> {
+  <span class="kw">from</span> { <span class="prp">opacity</span>: <span class="val">0</span>; <span class="prp">transform</span>: <span class="val">scale(0.92)</span>; }
+  <span class="kw">to</span>   { <span class="prp">opacity</span>: <span class="val">1</span>; <span class="prp">transform</span>: <span class="val">scale(1)</span>; }
+}
+
+<span class="cmt">/* Flutuação suave — para elementos decorativos */</span>
+<span class="mq">@keyframes</span> <span class="fn">float</span> {
+  <span class="num">0%</span>, <span class="num">100%</span> { <span class="prp">transform</span>: <span class="val">translateY(0px)</span>; }
+  <span class="num">50%</span>       { <span class="prp">transform</span>: <span class="val">translateY(-8px)</span>; }
+}
+
+<span class="cmt">/* ===========================================
+   HERO — Animações de entrada em cascata
+   =========================================== */</span>
+
+<span class="sel">.hero__tag</span> {
+  <span class="prp">animation</span>: <span class="val">fadeUp 0.6s ease-out 0s both</span>;
+}
+
+<span class="sel">.hero__title</span> {
+  <span class="prp">animation</span>: <span class="val">fadeUp 0.7s ease-out 0.2s both</span>;
+}
+
+<span class="sel">.hero__subtitle</span> {
+  <span class="prp">animation</span>: <span class="val">fadeUp 0.6s ease-out 0.4s both</span>;
+}
+
+<span class="sel">.hero__actions</span> {
+  <span class="prp">animation</span>: <span class="val">fadeUp 0.6s ease-out 0.6s both</span>;
+}
+
+<span class="sel">.hero__stats</span> {
+  <span class="prp">animation</span>: <span class="val">fadeUp 0.6s ease-out 0.8s both</span>;
+}
+
+<span class="sel">.hero__image-placeholder</span> {
+  <span class="prp">animation</span>: <span class="val">scaleIn 0.8s ease-out 0.3s both</span>;
+}
+
+<span class="cmt">/* Ícone do cavalo no placeholder — flutua suavemente */</span>
+<span class="sel">.hero__image-placeholder span</span> {
+  <span class="prp">animation</span>: <span class="val">float 3s ease-in-out infinite</span>;
+}
+
+<span class="cmt">/* ===========================================
+   NAVBAR — Entrada suave ao carregar
+   =========================================== */</span>
+
+<span class="sel">.navbar</span> {
+  <span class="prp">animation</span>: <span class="val">fadeIn 0.5s ease-out 0s both</span>;
+}
+
+<span class="cmt">/* ===========================================
+   UTILITÁRIOS — Classes para Scroll Reveal
+   (usadas pelo IntersectionObserver no JS)
+   =========================================== */</span>
+
+<span class="cmt">/* Estado inicial: invisível e deslocado */</span>
+<span class="sel">.reveal</span> {
+  <span class="prp">opacity</span>: <span class="val">0</span>;
+  <span class="prp">transform</span>: <span class="val">translateY(32px)</span>;
+  <span class="prp">transition</span>: <span class="val">opacity 0.65s ease-out, transform 0.65s ease-out</span>;
+}
+
+<span class="cmt">/* Estado ativo: visível — adicionado pelo JS quando o elemento entra na tela */</span>
+<span class="sel">.reveal.visible</span> {
+  <span class="prp">opacity</span>: <span class="val">1</span>;
+  <span class="prp">transform</span>: <span class="val">translateY(0)</span>;
+}
+
+<span class="cmt">/* Variantes de delay para efeito cascata nos cards */</span>
+<span class="sel">.reveal-delay-1</span> { <span class="prp">transition-delay</span>: <span class="val">0.1s</span>; }
+<span class="sel">.reveal-delay-2</span> { <span class="prp">transition-delay</span>: <span class="val">0.2s</span>; }
+<span class="sel">.reveal-delay-3</span> { <span class="prp">transition-delay</span>: <span class="val">0.3s</span>; }
+<span class="sel">.reveal-delay-4</span> { <span class="prp">transition-delay</span>: <span class="val">0.4s</span>; }
+
+<span class="cmt">/* ===========================================
+   RESPEITAR PREFERÊNCIA DE ACESSIBILIDADE
+   Usuários que configuram "reduzir movimento"
+   no sistema operacional não veem animações
+   =========================================== */</span>
+
+<span class="mq">@media</span> (<span class="prp">prefers-reduced-motion</span>: <span class="val">reduce</span>) {
+  <span class="sel">*, *::before, *::after</span> {
+    <span class="prp">animation-duration</span>:   <span class="val">0.01ms !important</span>;
+    <span class="prp">animation-delay</span>:      <span class="val">0ms !important</span>;
+    <span class="prp">transition-duration</span>:  <span class="val">0.01ms !important</span>;
+  }
+}</pre>
+  </div>
+
+  <h3>Adicionar classes <ic>reveal</ic> no HTML</h3>
+  <p>Para cada seção que deve aparecer ao rolar, adicione a classe <ic>reveal</ic> — e nos cards, adicione também o delay correspondente para criar a cascata:</p>
+
+  <div class="diff-block">
+    <div class="diff-header">
+      <span>index.html — adicionando classes reveal nos elementos</span>
+      <span class="diff-tag">DIFF</span>
+    </div>
+    <div class="diff-pre">
+<span class="diff-neutral"><span class="diff-cmt">&lt;!-- Seção inteira revela de uma vez --&gt;</span></span>
+<span class="diff-rem">&lt;div class="section-header"&gt;</span>
+<span class="diff-add">&lt;div class="section-header reveal"&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-neutral"><span class="diff-cmt">&lt;!-- Cards revelam em cascata com delays --&gt;</span></span>
+<span class="diff-rem">&lt;div class="service-card"&gt;</span>
+<span class="diff-add">&lt;div class="service-card reveal reveal-delay-1"&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-rem">&lt;div class="service-card"&gt;</span>
+<span class="diff-add">&lt;div class="service-card reveal reveal-delay-2"&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-rem">&lt;div class="service-card"&gt;</span>
+<span class="diff-add">&lt;div class="service-card reveal reveal-delay-3"&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-rem">&lt;div class="service-card"&gt;</span>
+<span class="diff-add">&lt;div class="service-card reveal reveal-delay-4"&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-neutral"><span class="diff-cmt">&lt;!-- Mesma lógica para case-card e about__inner --&gt;</span></span>
+<span class="diff-rem">&lt;article class="case-card"&gt;</span>
+<span class="diff-add">&lt;article class="case-card reveal reveal-delay-1"&gt;</span>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 15 — SCROLL REVEAL (IntersectionObserver)
+====================================================== -->
+<section id="mod15">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 15</div>
+    <h2>Scroll Reveal com<br />IntersectionObserver</h2>
+    <p>A API nativa do navegador que detecta quando um elemento entra no campo de visão — sem bibliotecas externas.</p>
+  </div>
+
+  <h3>O que é o IntersectionObserver?</h3>
+  <p>É uma API JavaScript que <strong>observa</strong> elementos e dispara uma função toda vez que eles entram ou saem da área visível da janela (<em>viewport</em>). É a forma moderna e eficiente de fazer scroll reveal — muito mais leve do que calcular posições com <ic>window.scrollY</ic> a cada scroll.</p>
+
+  <div class="concept-grid">
+    <div class="concept-card">
+      <div class="icon">👁️</div>
+      <div class="ct">observer</div>
+      <p>O objeto que fica "observando" os elementos registrados.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">📦</div>
+      <div class="ct">entries</div>
+      <p>A lista de elementos sendo observados que mudaram de estado.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🎯</div>
+      <div class="ct">isIntersecting</div>
+      <p>Booleano: <ic>true</ic> quando o elemento está visível na tela.</p>
+    </div>
+    <div class="concept-card">
+      <div class="icon">🔖</div>
+      <div class="ct">threshold</div>
+      <p>Quanto do elemento precisa estar visível (0 = 1 pixel, 1 = 100%).</p>
+    </div>
+  </div>
+
+  <h3>Código do Scroll Reveal</h3>
+  <p>Este é o trecho JavaScript que observa todos os elementos com a classe <ic>.reveal</ic> e adiciona <ic>.visible</ic> quando eles aparecem na tela:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">js/app.js — função scrollReveal()</span>
+      <span class="lang-tag js">JS</span>
+    </div>
+<pre><span class="kw">function</span> <span class="fn">scrollReveal</span>() {
+
+  <span class="cmt">// Configurações do observer</span>
+  <span class="kw">const</span> <span class="var">options</span> = {
+    <span class="cls">root</span>:       <span class="boo">null</span>,    <span class="cmt">// observa em relação à janela do navegador</span>
+    <span class="cls">threshold</span>:  <span class="num">0.12</span>,   <span class="cmt">// dispara quando 12% do elemento estiver visível</span>
+    <span class="cls">rootMargin</span>: <span class="str">'0px'</span>   <span class="cmt">// sem margem extra</span>
+  };
+
+  <span class="cmt">// Cria o observer com uma função de callback</span>
+  <span class="kw">const</span> <span class="var">observer</span> = <span class="kw">new</span> <span class="fn">IntersectionObserver</span>(<span class="kw">function</span>(<span class="var">entries</span>) {
+
+    <span class="cmt">// Para cada elemento observado que mudou de estado...</span>
+    <span class="var">entries</span>.<span class="met">forEach</span>(<span class="kw">function</span>(<span class="var">entry</span>) {
+
+      <span class="cmt">// Se o elemento está visível na tela:</span>
+      <span class="kw">if</span> (<span class="var">entry</span>.<span class="cls">isIntersecting</span>) {
+
+        <span class="cmt">// Adiciona a classe .visible (dispara a transição CSS)</span>
+        <span class="var">entry</span>.<span class="cls">target</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'visible'</span>);
+
+        <span class="cmt">// Para de observar — animação roda só uma vez</span>
+        <span class="var">observer</span>.<span class="met">unobserve</span>(<span class="var">entry</span>.<span class="cls">target</span>);
+      }
+    });
+
+  }, <span class="var">options</span>);
+
+  <span class="cmt">// Seleciona TODOS os elementos com a classe .reveal</span>
+  <span class="kw">const</span> <span class="var">elementos</span> = <span class="fn">document</span>.<span class="met">querySelectorAll</span>(<span class="str">'.reveal'</span>);
+
+  <span class="cmt">// Registra cada um no observer</span>
+  <span class="var">elementos</span>.<span class="met">forEach</span>(<span class="kw">function</span>(<span class="var">el</span>) {
+    <span class="var">observer</span>.<span class="met">observe</span>(<span class="var">el</span>);
+  });
+}
+
+<span class="cmt">// Chama a função quando a página termina de carregar</span>
+<span class="fn">document</span>.<span class="met">addEventListener</span>(<span class="str">'DOMContentLoaded'</span>, <span class="fn">scrollReveal</span>);</pre>
+  </div>
+
+  <div class="callout tip">
+    <strong>💡 Por que unobserve() depois de animar?</strong>
+    Depois que o elemento ficou visível e a animação rodou, não precisamos mais observá-lo. O <ic>unobserve</ic> libera memória e deixa o código mais performático — especialmente em páginas com muitos elementos.
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 16 — NAVBAR COM SCROLL
+====================================================== -->
+<section id="mod16">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 16</div>
+    <h2>Navbar com<br />Efeito de Scroll</h2>
+    <p>A navbar muda de aparência quando o usuário começa a rolar a página — um detalhe que transmite muita qualidade visual.</p>
+  </div>
+
+  <h3>O efeito desejado</h3>
+  <p>No topo da página, a navbar é totalmente preta (<ic>background: var(--color-black)</ic>). Quando o usuário rola mais de <strong>80px</strong>, ela ganha uma borda sutil e um leve blur de fundo, criando uma sensação de profundidade — como se flutuasse sobre o conteúdo.</p>
+
+  <h3>CSS — classe scrolled na navbar</h3>
+  <p>Adicione este bloco no final do <ic>css/navbar.css</ic>:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">css/navbar.css — adicionar ao final do arquivo</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* --- Estado da navbar após scroll --- */</span>
+<span class="sel">.navbar.scrolled</span> {
+  <span class="prp">background-color</span>: <span class="val">rgba(13, 13, 13, 0.92)</span>;
+  <span class="prp">backdrop-filter</span>: <span class="val">blur(12px)</span>;           <span class="cmt">/* efeito de vidro fosco */</span>
+  <span class="prp">-webkit-backdrop-filter</span>: <span class="val">blur(12px)</span>;   <span class="cmt">/* compatibilidade Safari */</span>
+  <span class="prp">border-bottom-color</span>: <span class="val">rgba(255, 255, 255, 0.1)</span>;
+  <span class="prp">box-shadow</span>: <span class="val">0 4px 24px rgba(0, 0, 0, 0.4)</span>;
+}
+
+<span class="cmt">/* Transição suave entre os dois estados */</span>
+<span class="sel">.navbar</span> {
+  <span class="prp">transition</span>: <span class="val">background-color 0.3s ease,
+               border-bottom-color 0.3s ease,
+               box-shadow 0.3s ease</span>;
+}</pre>
+  </div>
+
+  <h3>JavaScript — detectar posição do scroll</h3>
+  <p>Este trecho escuta o evento <ic>scroll</ic> da janela e adiciona ou remove a classe <ic>scrolled</ic> na navbar:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">js/app.js — função navbarScroll()</span>
+      <span class="lang-tag js">JS</span>
+    </div>
+<pre><span class="kw">function</span> <span class="fn">navbarScroll</span>() {
+  <span class="kw">const</span> <span class="var">navbar</span> = <span class="fn">document</span>.<span class="met">querySelector</span>(<span class="str">'.navbar'</span>);
+
+  <span class="cmt">// Escuta o evento de scroll na janela inteira</span>
+  <span class="fn">window</span>.<span class="met">addEventListener</span>(<span class="str">'scroll'</span>, <span class="kw">function</span>() {
+
+    <span class="cmt">// window.scrollY = quantos pixels o usuário rolou verticalmente</span>
+    <span class="kw">if</span> (<span class="fn">window</span>.<span class="cls">scrollY</span> > <span class="num">80</span>) {
+      <span class="var">navbar</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'scrolled'</span>);
+    } <span class="kw">else</span> {
+      <span class="var">navbar</span>.<span class="met">classList</span>.<span class="met">remove</span>(<span class="str">'scrolled'</span>);
+    }
+  });
+}
+
+<span class="fn">document</span>.<span class="met">addEventListener</span>(<span class="str">'DOMContentLoaded'</span>, <span class="fn">navbarScroll</span>);</pre>
+  </div>
+
+  <div class="callout">
+    <strong>🔍 Conceito: classList.add e classList.remove</strong>
+    <ic>classList</ic> é a propriedade de todo elemento HTML que dá acesso às suas classes CSS. Os métodos <ic>add()</ic> e <ic>remove()</ic> adicionam ou removem classes dinamicamente — sem sobrescrever as outras classes que o elemento já tem. É a forma idiomática de usar CSS + JS juntos.
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 17 — MENU HAMBURGUER
+====================================================== -->
+<section id="mod17">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 17</div>
+    <h2>Menu Hamburguer</h2>
+    <p>O botão de três linhas que abre e fecha a navegação no mobile — um dos componentes JavaScript mais clássicos do front-end.</p>
+  </div>
+
+  <h3>HTML — botão hamburguer no header</h3>
+  <p>Adicione o botão hamburguer dentro do <ic>.navbar__inner</ic>, depois dos links de navegação. Ele só aparece no mobile (controlado pelo CSS):</p>
+
+  <div class="diff-block">
+    <div class="diff-header">
+      <span>index.html — dentro do &lt;header class="navbar"&gt;</span>
+      <span class="diff-tag">DIFF</span>
+    </div>
+    <div class="diff-pre">
+<span class="diff-neutral">  &lt;div class="container navbar__inner"&gt;</span>
+<span class="diff-neutral">    &lt;a href="#inicio" class="navbar__logo"&gt;...&lt;/a&gt;</span>
+<span class="diff-neutral">    &lt;nav class="navbar__nav"&gt;...&lt;/nav&gt;</span>
+<span class="diff-neutral">    &lt;a href="#contato" class="btn btn--primary"&gt;...&lt;/a&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-add">    &lt;!-- Botão hamburguer (visível só no mobile) --&gt;</span>
+<span class="diff-add">    &lt;button class="hamburger" id="hamburger" aria-label="Abrir menu"&gt;</span>
+<span class="diff-add">      &lt;span class="hamburger__line"&gt;&lt;/span&gt;</span>
+<span class="diff-add">      &lt;span class="hamburger__line"&gt;&lt;/span&gt;</span>
+<span class="diff-add">      &lt;span class="hamburger__line"&gt;&lt;/span&gt;</span>
+<span class="diff-add">    &lt;/button&gt;</span>
+<span class="diff-neutral">  &lt;/div&gt;</span>
+    </div>
+  </div>
+
+  <h3>CSS — botão e menu mobile</h3>
+  <p>Adicione estes blocos no final de <ic>css/navbar.css</ic>, depois das regras existentes:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">css/navbar.css — hamburguer (adicionar ao final)</span>
+      <span class="lang-tag">CSS</span>
+    </div>
+<pre><span class="cmt">/* --- Botão hamburguer --- */</span>
+<span class="sel">.hamburger</span> {
+  <span class="prp">display</span>: <span class="val">none</span>;            <span class="cmt">/* oculto por padrão (desktop) */</span>
+  <span class="prp">flex-direction</span>: <span class="val">column</span>;
+  <span class="prp">gap</span>: <span class="val">5px</span>;
+  <span class="prp">padding</span>: <span class="val">4px</span>;
+  <span class="prp">background</span>: <span class="val">none</span>;
+  <span class="prp">border</span>: <span class="val">none</span>;
+  <span class="prp">cursor</span>: <span class="val">pointer</span>;
+}
+
+<span class="sel">.hamburger__line</span> {
+  <span class="prp">width</span>: <span class="val">24px</span>;
+  <span class="prp">height</span>: <span class="val">2px</span>;
+  <span class="prp">background-color</span>: <span class="val">var(--color-white)</span>;
+  <span class="prp">border-radius</span>: <span class="val">2px</span>;
+  <span class="prp">transition</span>: <span class="val">transform 0.3s ease, opacity 0.3s ease</span>;
+  <span class="prp">transform-origin</span>: <span class="val">center</span>;
+}
+
+<span class="cmt">/* Animação de X quando o menu está aberto */</span>
+<span class="sel">.hamburger.open .hamburger__line:nth-child(1)</span> {
+  <span class="prp">transform</span>: <span class="val">translateY(7px) rotate(45deg)</span>;
+}
+
+<span class="sel">.hamburger.open .hamburger__line:nth-child(2)</span> {
+  <span class="prp">opacity</span>: <span class="val">0</span>;
+  <span class="prp">transform</span>: <span class="val">scaleX(0)</span>;
+}
+
+<span class="sel">.hamburger.open .hamburger__line:nth-child(3)</span> {
+  <span class="prp">transform</span>: <span class="val">translateY(-7px) rotate(-45deg)</span>;
+}
+
+<span class="cmt">/* --- Menu mobile deslizante --- */</span>
+<span class="sel">.navbar__mobile-menu</span> {
+  <span class="prp">display</span>: <span class="val">none</span>;
+  <span class="prp">position</span>: <span class="val">absolute</span>;
+  <span class="prp">top</span>: <span class="val">100%</span>;               <span class="cmt">/* logo abaixo do header */</span>
+  <span class="prp">left</span>: <span class="val">0</span>;
+  <span class="prp">right</span>: <span class="val">0</span>;
+  <span class="prp">background-color</span>: <span class="val">var(--color-black)</span>;
+  <span class="prp">border-bottom</span>: <span class="val">1px solid rgba(255, 255, 255, 0.08)</span>;
+  <span class="prp">padding</span>: <span class="val">24px var(--space-lg)</span>;
+  <span class="prp">flex-direction</span>: <span class="val">column</span>;
+  <span class="prp">gap</span>: <span class="val">var(--space-md)</span>;
+  <span class="prp">transform</span>: <span class="val">translateY(-8px)</span>;
+  <span class="prp">opacity</span>: <span class="val">0</span>;
+  <span class="prp">transition</span>: <span class="val">transform 0.3s ease, opacity 0.3s ease</span>;
+}
+
+<span class="sel">.navbar__mobile-menu.open</span> {
+  <span class="prp">display</span>: <span class="val">flex</span>;
+}
+
+<span class="sel">.navbar__mobile-menu.visible</span> {
+  <span class="prp">transform</span>: <span class="val">translateY(0)</span>;
+  <span class="prp">opacity</span>: <span class="val">1</span>;
+}
+
+<span class="sel">.navbar__mobile-menu a</span> {
+  <span class="prp">color</span>: <span class="val">rgba(255, 255, 255, 0.75)</span>;
+  <span class="prp">font-size</span>: <span class="val">var(--text-lg)</span>;
+  <span class="prp">padding</span>: <span class="val">6px 0</span>;
+  <span class="prp">border-bottom</span>: <span class="val">1px solid rgba(255, 255, 255, 0.05)</span>;
+}
+
+<span class="sel">.navbar__mobile-menu a:last-child</span> { <span class="prp">border-bottom</span>: <span class="val">none</span>; }
+<span class="sel">.navbar__mobile-menu a:hover</span>     { <span class="prp">color</span>: <span class="val">var(--color-white)</span>; }
+
+<span class="cmt">/* Mostrar hamburguer no mobile (dentro do responsive.css) */</span>
+<span class="mq">@media</span> (<span class="prp">max-width</span>: <span class="val">1023px</span>) {
+  <span class="sel">.hamburger</span> { <span class="prp">display</span>: <span class="val">flex</span>; }
+}</pre>
+  </div>
+
+  <h3>HTML — adicionar o menu mobile</h3>
+  <p>Logo após o <ic>&lt;/header&gt;</ic>, adicione o div do menu mobile. Ele vai fora do header para poder ocupar a largura toda da tela abaixo do navbar:</p>
+
+  <div class="diff-block">
+    <div class="diff-header">
+      <span>index.html — após o &lt;/header&gt;</span>
+      <span class="diff-tag">DIFF</span>
+    </div>
+    <div class="diff-pre">
+<span class="diff-neutral">&lt;/header&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-add">&lt;!-- Menu mobile (abre abaixo do header) --&gt;</span>
+<span class="diff-add">&lt;nav class="navbar__mobile-menu" id="mobileMenu"&gt;</span>
+<span class="diff-add">  &lt;a href="#servicos"&gt;Serviços&lt;/a&gt;</span>
+<span class="diff-add">  &lt;a href="#sobre"&gt;Sobre&lt;/a&gt;</span>
+<span class="diff-add">  &lt;a href="#cases"&gt;Cases&lt;/a&gt;</span>
+<span class="diff-add">  &lt;a href="#contato"&gt;Contato&lt;/a&gt;</span>
+<span class="diff-add">  &lt;a href="#contato" class="btn btn--primary"&gt;Falar com especialista&lt;/a&gt;</span>
+<span class="diff-add">&lt;/nav&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-neutral">&lt;main&gt;</span>
+    </div>
+  </div>
+
+  <h3>JavaScript — abrir e fechar o menu</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">js/app.js — função hamburgerMenu()</span>
+      <span class="lang-tag js">JS</span>
+    </div>
+<pre><span class="kw">function</span> <span class="fn">hamburgerMenu</span>() {
+  <span class="kw">const</span> <span class="var">btn</span>  = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'hamburger'</span>);
+  <span class="kw">const</span> <span class="var">menu</span> = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'mobileMenu'</span>);
+
+  <span class="cmt">// Clique no botão hamburguer</span>
+  <span class="var">btn</span>.<span class="met">addEventListener</span>(<span class="str">'click'</span>, <span class="kw">function</span>() {
+    <span class="kw">const</span> <span class="var">isOpen</span> = <span class="var">btn</span>.<span class="met">classList</span>.<span class="met">contains</span>(<span class="str">'open'</span>);
+
+    <span class="kw">if</span> (<span class="var">isOpen</span>) {
+      <span class="fn">closeMenu</span>();
+    } <span class="kw">else</span> {
+      <span class="fn">openMenu</span>();
+    }
+  });
+
+  <span class="cmt">// Fechar ao clicar em qualquer link do menu mobile</span>
+  <span class="var">menu</span>.<span class="met">querySelectorAll</span>(<span class="str">'a'</span>).<span class="met">forEach</span>(<span class="kw">function</span>(<span class="var">link</span>) {
+    <span class="var">link</span>.<span class="met">addEventListener</span>(<span class="str">'click'</span>, <span class="fn">closeMenu</span>);
+  });
+
+  <span class="cmt">// Fechar ao clicar fora do menu</span>
+  <span class="fn">document</span>.<span class="met">addEventListener</span>(<span class="str">'click'</span>, <span class="kw">function</span>(<span class="var">e</span>) {
+    <span class="kw">const</span> <span class="var">dentroDoMenu</span> = <span class="var">menu</span>.<span class="met">contains</span>(<span class="var">e</span>.<span class="cls">target</span>);
+    <span class="kw">const</span> <span class="var">dentroDoBtn</span>  = <span class="var">btn</span>.<span class="met">contains</span>(<span class="var">e</span>.<span class="cls">target</span>);
+    <span class="kw">if</span> (!<span class="var">dentroDoMenu</span> && !<span class="var">dentroDoBtn</span>) {
+      <span class="fn">closeMenu</span>();
+    }
+  });
+
+  <span class="kw">function</span> <span class="fn">openMenu</span>() {
+    <span class="var">btn</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'open'</span>);
+    <span class="var">menu</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'open'</span>);   <span class="cmt">// display: flex</span>
+    <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+      <span class="var">menu</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'visible'</span>); <span class="cmt">// dispara transição de entrada</span>
+    }, <span class="num">10</span>);                         <span class="cmt">// pequeno delay para o display render</span>
+    <span class="var">btn</span>.<span class="met">setAttribute</span>(<span class="str">'aria-label'</span>, <span class="str">'Fechar menu'</span>);
+  }
+
+  <span class="kw">function</span> <span class="fn">closeMenu</span>() {
+    <span class="var">btn</span>.<span class="met">classList</span>.<span class="met">remove</span>(<span class="str">'open'</span>);
+    <span class="var">menu</span>.<span class="met">classList</span>.<span class="met">remove</span>(<span class="str">'visible'</span>);
+    <span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+      <span class="var">menu</span>.<span class="met">classList</span>.<span class="met">remove</span>(<span class="str">'open'</span>); <span class="cmt">// remove display após a transição</span>
+    }, <span class="num">300</span>);                          <span class="cmt">// aguarda 300ms (duração da transition)</span>
+    <span class="var">btn</span>.<span class="met">setAttribute</span>(<span class="str">'aria-label'</span>, <span class="str">'Abrir menu'</span>);
+  }
+}
+
+<span class="fn">document</span>.<span class="met">addEventListener</span>(<span class="str">'DOMContentLoaded'</span>, <span class="fn">hamburgerMenu</span>);</pre>
+  </div>
+
+  <div class="callout tip">
+    <strong>💡 Por que o setTimeout de 10ms?</strong>
+    O navegador precisa de pelo menos um ciclo de renderização para "ver" o elemento com <ic>display: flex</ic> antes de aplicar a transição CSS. Sem o timeout, a transição não funciona porque o navegador não viu o estado inicial. É um truque clássico para animar elementos que saem de <ic>display: none</ic>.
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 18 — ARQUIVO APP.JS COMPLETO
+====================================================== -->
+<section id="mod18">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 18</div>
+    <h2>Arquivo app.js<br />Completo</h2>
+    <p>Unificando todo o JavaScript do projeto em um arquivo bem organizado — e fazendo a estrutura final de arquivos.</p>
+  </div>
+
+  <h3>Estrutura de arquivos — atualização</h3>
+
+  <div style="background:var(--code-bg);border-radius:10px;padding:20px 24px;margin:24px 0;font-family:var(--font-mono);font-size:13px;line-height:2;color:var(--code-txt);border:1px solid #222;">
+<span style="color:#ffcb6b;">📁 checkmate-landing/</span>
+<br/><span style="color:#444;">│</span>
+<br/><span style="color:#444;">├── </span><span style="color:#80cbc4;">index.html</span>
+<br/><span style="color:#444;">├── </span><span style="color:#ffcb6b;">📁 css/</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#80cbc4;">global.css · navbar.css · hero.css · services.css</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#80cbc4;">about.css · cases.css · contact.css · footer.css</span>
+<br/><span style="color:#444;">│   ├── </span><span style="color:#c3e88d;">animations.css</span><span style="color:#546e7a;">      ← novo ✦</span>
+<br/><span style="color:#444;">│   └── </span><span style="color:#80cbc4;">responsive.css</span><span style="color:#546e7a;">      ← último link</span>
+<br/><span style="color:#444;">│</span>
+<br/><span style="color:#444;">├── </span><span style="color:#ffcb6b;">📁 js/</span><span style="color:#546e7a;">                  ← nova pasta ✦</span>
+<br/><span style="color:#444;">│   └── </span><span style="color:#c3e88d;">app.js</span><span style="color:#546e7a;">              ← todo o JavaScript ✦</span>
+<br/><span style="color:#444;">│</span>
+<br/><span style="color:#444;">└── </span><span style="color:#ffcb6b;">📁 assets/</span>
+<br/><span style="color:#444;">    ├── </span><span style="color:#ffcb6b;">📁 images/</span>
+<br/><span style="color:#444;">    └── </span><span style="color:#ffcb6b;">📁 icons/</span>
+  </div>
+
+  <h3>js/app.js — arquivo completo e organizado</h3>
+  <p>Crie a pasta <ic>js/</ic> e o arquivo <ic>app.js</ic> dentro dela. Cole todo o código abaixo:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">js/app.js — arquivo completo</span>
+      <span class="lang-tag js">JS</span>
+    </div>
+<pre><span class="cmt">/* =============================================
+   CHECKMATE GESTÃO — app.js
+   JavaScript principal da landing page
+   ============================================= */</span>
+
+<span class="cmt">// Número do WhatsApp (troque pelo número real)</span>
+<span class="kw">const</span> <span class="var">WHATSAPP</span> = <span class="str">'5547999999999'</span>;
+
+<span class="cmt">/* -------------------------------------------
+   1. NAVBAR — Efeito ao rolar
+------------------------------------------- */</span>
+<span class="kw">function</span> <span class="fn">navbarScroll</span>() {
+  <span class="kw">const</span> <span class="var">navbar</span> = <span class="fn">document</span>.<span class="met">querySelector</span>(<span class="str">'.navbar'</span>);
+  <span class="fn">window</span>.<span class="met">addEventListener</span>(<span class="str">'scroll'</span>, <span class="kw">function</span>() {
+    <span class="var">navbar</span>.<span class="met">classList</span>.<span class="met">toggle</span>(<span class="str">'scrolled'</span>, <span class="fn">window</span>.<span class="cls">scrollY</span> > <span class="num">80</span>);
+  });
+}
+
+<span class="cmt">/* -------------------------------------------
+   2. MENU HAMBURGUER
+------------------------------------------- */</span>
+<span class="kw">function</span> <span class="fn">hamburgerMenu</span>() {
+  <span class="kw">const</span> <span class="var">btn</span>  = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'hamburger'</span>);
+  <span class="kw">const</span> <span class="var">menu</span> = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'mobileMenu'</span>);
+  <span class="kw">if</span> (!<span class="var">btn</span> || !<span class="var">menu</span>) <span class="kw">return</span>; <span class="cmt">// proteção caso não existam</span>
+
+  <span class="var">btn</span>.<span class="met">addEventListener</span>(<span class="str">'click'</span>, <span class="kw">function</span>() {
+    <span class="var">btn</span>.<span class="met">classList</span>.<span class="met">contains</span>(<span class="str">'open'</span>) ? <span class="fn">closeMenu</span>() : <span class="fn">openMenu</span>();
+  });
+
+  <span class="var">menu</span>.<span class="met">querySelectorAll</span>(<span class="str">'a'</span>).<span class="met">forEach</span>(<span class="kw">function</span>(<span class="var">link</span>) {
+    <span class="var">link</span>.<span class="met">addEventListener</span>(<span class="str">'click'</span>, <span class="fn">closeMenu</span>);
+  });
+
+  <span class="fn">document</span>.<span class="met">addEventListener</span>(<span class="str">'click'</span>, <span class="kw">function</span>(<span class="var">e</span>) {
+    <span class="kw">if</span> (!<span class="var">menu</span>.<span class="met">contains</span>(<span class="var">e</span>.<span class="cls">target</span>) && !<span class="var">btn</span>.<span class="met">contains</span>(<span class="var">e</span>.<span class="cls">target</span>)) <span class="fn">closeMenu</span>();
+  });
+
+  <span class="kw">function</span> <span class="fn">openMenu</span>() {
+    <span class="var">btn</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'open'</span>);
+    <span class="var">menu</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'open'</span>);
+    <span class="fn">setTimeout</span>(<span class="kw">function</span>() { <span class="var">menu</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'visible'</span>); }, <span class="num">10</span>);
+    <span class="var">btn</span>.<span class="met">setAttribute</span>(<span class="str">'aria-label'</span>, <span class="str">'Fechar menu'</span>);
+  }
+
+  <span class="kw">function</span> <span class="fn">closeMenu</span>() {
+    <span class="var">btn</span>.<span class="met">classList</span>.<span class="met">remove</span>(<span class="str">'open'</span>);
+    <span class="var">menu</span>.<span class="met">classList</span>.<span class="met">remove</span>(<span class="str">'visible'</span>);
+    <span class="fn">setTimeout</span>(<span class="kw">function</span>() { <span class="var">menu</span>.<span class="met">classList</span>.<span class="met">remove</span>(<span class="str">'open'</span>); }, <span class="num">300</span>);
+    <span class="var">btn</span>.<span class="met">setAttribute</span>(<span class="str">'aria-label'</span>, <span class="str">'Abrir menu'</span>);
+  }
+}
+
+<span class="cmt">/* -------------------------------------------
+   3. SCROLL REVEAL — IntersectionObserver
+------------------------------------------- */</span>
+<span class="kw">function</span> <span class="fn">scrollReveal</span>() {
+  <span class="kw">const</span> <span class="var">observer</span> = <span class="kw">new</span> <span class="fn">IntersectionObserver</span>(<span class="kw">function</span>(<span class="var">entries</span>) {
+    <span class="var">entries</span>.<span class="met">forEach</span>(<span class="kw">function</span>(<span class="var">entry</span>) {
+      <span class="kw">if</span> (<span class="var">entry</span>.<span class="cls">isIntersecting</span>) {
+        <span class="var">entry</span>.<span class="cls">target</span>.<span class="met">classList</span>.<span class="met">add</span>(<span class="str">'visible'</span>);
+        <span class="var">observer</span>.<span class="met">unobserve</span>(<span class="var">entry</span>.<span class="cls">target</span>);
+      }
+    });
+  }, { <span class="cls">threshold</span>: <span class="num">0.12</span> });
+
+  <span class="fn">document</span>.<span class="met">querySelectorAll</span>(<span class="str">'.reveal'</span>).<span class="met">forEach</span>(<span class="kw">function</span>(<span class="var">el</span>) {
+    <span class="var">observer</span>.<span class="met">observe</span>(<span class="var">el</span>);
+  });
+}
+
+<span class="cmt">/* -------------------------------------------
+   4. FORMULÁRIO DE CONTATO — WhatsApp
+------------------------------------------- */</span>
+<span class="kw">function</span> <span class="fn">contactForm</span>() {
+  <span class="kw">const</span> <span class="var">form</span> = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'contactForm'</span>);
+  <span class="kw">if</span> (!<span class="var">form</span>) <span class="kw">return</span>;
+
+  <span class="var">form</span>.<span class="met">addEventListener</span>(<span class="str">'submit'</span>, <span class="kw">function</span>(<span class="var">e</span>) {
+    <span class="var">e</span>.<span class="met">preventDefault</span>();
+
+    <span class="kw">const</span> <span class="var">name</span>    = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'name'</span>).<span class="cls">value</span>;
+    <span class="kw">const</span> <span class="var">phone</span>   = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'whatsapp'</span>).<span class="cls">value</span>;
+    <span class="kw">const</span> <span class="var">service</span> = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'service'</span>).<span class="cls">value</span>;
+    <span class="kw">const</span> <span class="var">msg</span>     = <span class="fn">document</span>.<span class="met">getElementById</span>(<span class="str">'message'</span>).<span class="cls">value</span>;
+
+    <span class="kw">const</span> <span class="var">text</span> = <span class="str">`Olá! Vim pelo site.
+Nome: <span class="var">${name}</span>
+WhatsApp: <span class="var">${phone}</span>
+Interesse: <span class="var">${service || 'Não informado'}</span>
+<span class="var">${msg ? 'Mensagem: ' + msg : ''}</span>`</span>;
+
+    <span class="fn">window</span>.<span class="met">open</span>(<span class="str">`https://wa.me/<span class="var">${WHATSAPP}</span>?text=<span class="var">${<span class="fn">encodeURIComponent</span>(<span class="var">text</span>)}</span>`</span>, <span class="str">'_blank'</span>);
+  });
+}
+
+<span class="cmt">/* -------------------------------------------
+   5. INICIALIZAÇÃO
+   Tudo começa depois do DOM estar pronto
+------------------------------------------- */</span>
+<span class="fn">document</span>.<span class="met">addEventListener</span>(<span class="str">'DOMContentLoaded'</span>, <span class="kw">function</span>() {
+  <span class="fn">navbarScroll</span>();
+  <span class="fn">hamburgerMenu</span>();
+  <span class="fn">scrollReveal</span>();
+  <span class="fn">contactForm</span>();
+});
+</pre>
+  </div>
+
+  <h3>Vincular o app.js no index.html</h3>
+  <p>Remova o bloco <ic>&lt;script&gt;</ic> inline que estava antes do <ic>&lt;/body&gt;</ic> e substitua por um único link para o arquivo:</p>
+
+  <div class="diff-block">
+    <div class="diff-header">
+      <span>index.html — antes de &lt;/body&gt;</span>
+      <span class="diff-tag">DIFF</span>
+    </div>
+    <div class="diff-pre">
+<span class="diff-rem">&lt;script&gt;</span>
+<span class="diff-rem">  // todo o código JS inline que estava aqui</span>
+<span class="diff-rem">&lt;/script&gt;</span>
+<span class="diff-neutral">&nbsp;</span>
+<span class="diff-add">&lt;!-- Script externo: src aponta para o arquivo js/app.js --&gt;</span>
+<span class="diff-add">&lt;script src="js/app.js"&gt;&lt;/script&gt;</span>
+<span class="diff-neutral">&lt;/body&gt;</span>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>🔍 Por que script antes de &lt;/body&gt; e não no &lt;head&gt;?</strong>
+    O JavaScript que manipula o HTML precisa que os elementos já existam no DOM. Se o script fica no <ic>&lt;head&gt;</ic>, ele roda antes do HTML ser lido, e <ic>document.getElementById()</ic> retorna <ic>null</ic>. Colocando antes do <ic>&lt;/body&gt;</ic>, garantimos que todo o HTML já foi processado.
+  </div>
+
+  <h3>&lt;head&gt; completo — todos os links na ordem certa</h3>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">index.html — &lt;head&gt; final completo</span>
+      <span class="lang-tag">HTML</span>
+    </div>
+<pre><span class="tag">&lt;head&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="att">charset</span>=<span class="str">"UTF-8"</span> <span class="tag">/&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="att">name</span>=<span class="str">"viewport"</span> <span class="att">content</span>=<span class="str">"width=device-width, initial-scale=1.0"</span> <span class="tag">/&gt;</span>
+  <span class="tag">&lt;title&gt;</span>Checkmate Gestão — Tráfego Pago que Converte<span class="tag">&lt;/title&gt;</span>
+
+  <span class="cmt">&lt;!-- SEO básico --&gt;</span>
+  <span class="tag">&lt;meta</span> <span class="att">name</span>=<span class="str">"description"</span> <span class="att">content</span>=<span class="str">"Gestão de tráfego pago no Meta Ads e Google Ads. Criativos, edição de vídeo e resultados reais."</span> <span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- Fontes --&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"preconnect"</span> <span class="att">href</span>=<span class="str">"https://fonts.googleapis.com"</span> <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">href</span>=<span class="str">"https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap"</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="tag">/&gt;</span>
+
+  <span class="cmt">&lt;!-- CSS: base → componentes → animações → responsivo --&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/global.css"</span>     <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/navbar.css"</span>     <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/hero.css"</span>       <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/services.css"</span>   <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/about.css"</span>      <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/cases.css"</span>      <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/contact.css"</span>    <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/footer.css"</span>     <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/animations.css"</span> <span class="tag">/&gt;</span>
+  <span class="tag">&lt;link</span> <span class="att">rel</span>=<span class="str">"stylesheet"</span> <span class="att">href</span>=<span class="str">"css/responsive.css"</span> <span class="tag">/&gt;</span> <span class="cmt">&lt;!-- sempre último --&gt;</span>
+<span class="tag">&lt;/head&gt;</span></pre>
+  </div>
+</section>
+
+<!-- ======================================================
+     MÓDULO 19 — DEPLOY
+====================================================== -->
+<section id="mod19">
+  <div class="module-header">
+    <div class="module-num">// MÓDULO 19</div>
+    <h2>Deploy e Publicação</h2>
+    <p>Colocar o site no ar — acessível para qualquer pessoa no mundo — em menos de 5 minutos, de graça.</p>
+  </div>
+
+  <h3>Escolhendo a plataforma</h3>
+  <p>Para sites estáticos (HTML + CSS + JS sem backend), as melhores opções gratuitas são:</p>
+
+  <div class="deploy-grid">
+    <div class="deploy-card">
+      <div class="dc-logo">▲</div>
+      <div class="dc-name">Vercel</div>
+      <div class="dc-desc">A plataforma preferida de desenvolvedores front-end. Arrasta, solta e o site vai ao ar.</div>
+      <ul class="dc-pros">
+        <li>HTTPS automático (certificado SSL)</li>
+        <li>CDN global — velocidade no mundo todo</li>
+        <li>Deploy automático via GitHub</li>
+        <li>Domínio customizado gratuito</li>
+        <li>100GB de banda/mês no plano free</li>
+      </ul>
+      <span class="dc-tag">RECOMENDADO</span>
+    </div>
+    <div class="deploy-card">
+      <div class="dc-logo">◈</div>
+      <div class="dc-name">Netlify</div>
+      <div class="dc-desc">Alternativa sólida com drag-and-drop simples e boa integração com formulários.</div>
+      <ul class="dc-pros">
+        <li>Deploy via drag-and-drop da pasta</li>
+        <li>HTTPS automático</li>
+        <li>100GB de banda/mês no plano free</li>
+        <li>Formulários nativos (sem JS)</li>
+        <li>Interface mais simples para iniciantes</li>
+      </ul>
+      <span class="dc-tag">ALTERNATIVA</span>
+    </div>
+  </div>
+
+  <h3>Fluxo de deploy — Vercel (opção drag-and-drop)</h3>
+
+  <div class="flow">
+    <div class="flow-step">
+      <span class="fs-icon">📁</span>
+      Pasta do projeto
+      <span class="fs-label">checkmate-landing/</span>
+    </div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">
+      <span class="fs-icon">🌐</span>
+      vercel.com
+      <span class="fs-label">criar conta grátis</span>
+    </div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">
+      <span class="fs-icon">📤</span>
+      Arrastar pasta
+      <span class="fs-label">no dashboard</span>
+    </div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">
+      <span class="fs-icon">⚙️</span>
+      Build automático
+      <span class="fs-label">~30 segundos</span>
+    </div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step">
+      <span class="fs-icon">✅</span>
+      Site no ar
+      <span class="fs-label">URL gerada</span>
+    </div>
+  </div>
+
+  <h3>Passo a passo — Vercel via GitHub (recomendado)</h3>
+  <p>Usar o GitHub como intermediário permite que toda vez que você salvar o código, o site atualize automaticamente. É o fluxo profissional.</p>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <h4>Criar repositório no GitHub</h4>
+      <p>Acesse <ic>github.com</ic>, crie uma conta (se não tiver) e crie um novo repositório chamado <ic>checkmate-landing</ic>. Deixe público.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <h4>Fazer upload dos arquivos</h4>
+      <p>No repositório criado, clique em <strong>"uploading an existing file"</strong> e arraste toda a pasta do projeto. Escreva uma mensagem de commit como <ic>"Primeiro commit: landing page completa"</ic> e confirme.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <h4>Conectar Vercel ao GitHub</h4>
+      <p>Acesse <ic>vercel.com</ic>, crie uma conta com o GitHub. Clique em <strong>"Add New Project"</strong>, selecione o repositório <ic>checkmate-landing</ic> e clique em <strong>Deploy</strong>.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <h4>Configurar o Framework Preset</h4>
+      <p>Quando aparecer a tela de configurações, selecione <strong>"Other"</strong> como framework (não é React, Next.js nem nada específico). Clique em Deploy e aguarde.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <h4>Site no ar!</h4>
+      <p>Em cerca de 30 segundos, o Vercel gera uma URL no formato <ic>checkmate-landing-seu-usuario.vercel.app</ic>. Compartilhe com clientes e acesse de qualquer dispositivo.</p>
+    </div>
+  </div>
+
+  <h3>Conectar domínio próprio</h3>
+  <p>Se você tiver ou comprar um domínio como <ic>checkmate.com.br</ic>, siga os passos:</p>
+
+  <table>
+    <thead>
+      <tr><th>Passo</th><th>Onde fazer</th><th>O que fazer</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Vercel → Project → Settings → Domains</td><td>Adicionar o domínio: <ic>checkmate.com.br</ic></td></tr>
+      <tr><td>2</td><td>Vercel</td><td>Copiar o valor do registro <ic>CNAME</ic> fornecido</td></tr>
+      <tr><td>3</td><td>Registrador do domínio (Registro.br, GoDaddy, etc.)</td><td>Acessar as configurações de DNS do domínio</td></tr>
+      <tr><td>4</td><td>Painel DNS do domínio</td><td>Criar registro <ic>CNAME</ic> com o valor do Vercel</td></tr>
+      <tr><td>5</td><td>Aguardar</td><td>Propagação leva de 5 minutos a 48 horas</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout green">
+    <strong>✅ HTTPS gratuito e automático</strong>
+    O Vercel emite e renova automaticamente o certificado SSL do seu domínio. O cadeado verde na barra do navegador (HTTPS) funciona sem nenhuma configuração extra da sua parte.
+  </div>
+
+  <h3>Atualizando o site depois do deploy</h3>
+  <p>Com o fluxo GitHub + Vercel, atualizar o site é simples:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <div class="code-dots"><div class="code-dot"></div><div class="code-dot"></div><div class="code-dot"></div></div>
+      <span class="filename">Como atualizar o site</span>
+      <span class="lang-tag bash">FLUXO</span>
+    </div>
+<pre><span class="cmt"># 1. Você edita os arquivos no VS Code (hero.css, index.html, etc.)</span>
+<span class="cmt"># 2. Acessa o repositório no github.com</span>
+<span class="cmt"># 3. Clica no arquivo que quer atualizar → botão de editar (lápis)</span>
+<span class="cmt"># 4. Cola o novo código e faz commit</span>
+<span class="cmt"># 5. Vercel detecta o novo commit automaticamente</span>
+<span class="cmt"># 6. Faz novo deploy em ~30 segundos</span>
+<span class="cmt"># 7. Site atualizado no ar ✓</span>
+
+<span class="cmt"># Ou, se você já usa Git no terminal:</span>
+git add .
+git commit -m "Atualizar hero section"
+git push origin main
+<span class="cmt"># → Vercel faz o deploy automaticamente</span></pre>
+  </div>
+
+  <hr class="divider" />
+
+  <h3>✅ Checklist de publicação</h3>
+
+  <table>
+    <thead>
+      <tr><th>Item</th><th>Verificar antes de publicar</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Número do WhatsApp</td><td>Substituir <ic>5547999999999</ic> pelo número real em <ic>app.js</ic></td></tr>
+      <tr><td>E-mail de contato</td><td>Atualizar <ic>mailto:</ic> no footer com o e-mail real</td></tr>
+      <tr><td>Links de redes sociais</td><td>Atualizar URLs do Instagram, LinkedIn no footer</td></tr>
+      <tr><td>Imagens reais</td><td>Substituir placeholders por fotos reais em <ic>assets/images/</ic></td></tr>
+      <tr><td>Ícones SVG</td><td>Baixar e colocar os ícones reais em <ic>assets/icons/</ic></td></tr>
+      <tr><td>Meta description</td><td>Personalizar o texto da tag <ic>&lt;meta name="description"&gt;</ic></td></tr>
+      <tr><td>Título da aba</td><td>Verificar o <ic>&lt;title&gt;</ic> no <ic>&lt;head&gt;</ic></td></tr>
+      <tr><td>Teste mobile</td><td>Testar no celular real, não só no DevTools</td></tr>
+      <tr><td>Links do menu</td><td>Clicar em cada link da navbar e conferir se rola para a seção certa</td></tr>
+      <tr><td>Formulário</td><td>Testar envio: WhatsApp deve abrir com os dados preenchidos</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ======================================================
+     FECHAMENTO DO PROJETO
+====================================================== -->
+<section>
+  <div class="final-badge">
+    <div class="fb-label">♞ Projeto concluído</div>
+    <h3>Landing Page Checkmate Gestão</h3>
+    <p>Do wireframe ao deploy — HTML, CSS e JavaScript do zero. Uma landing page completa, responsiva e publicada no ar.</p>
+    <span class="fb-url">checkmate-landing.vercel.app</span>
+  </div>
+
+  <div class="challenge">
+    <div class="ch-label">✦ Próximos passos — além da apostila</div>
+    <h4>Evoluções possíveis para o projeto</h4>
+    <ul>
+      <li><strong>Google Analytics 4</strong> — rastrear visitas, páginas vistas e cliques no CTA com uma tag JS</li>
+      <li><strong>Meta Pixel</strong> — instalar o pixel do Facebook para criar públicos de remarketing dos visitantes</li>
+      <li><strong>Contador animado</strong> — fazer os números do hero ("+50 clientes", "3.8x ROAS") contarem de 0 ao valor final com JS</li>
+      <li><strong>Lightbox de cases</strong> — abrir os prints de resultados em modal ao clicar nos cards</li>
+      <li><strong>Blog de conteúdo</strong> — adicionar uma página de artigos sobre tráfego pago para SEO orgânico</li>
+      <li><strong>React / Next.js</strong> — reescrever o projeto em um framework moderno como próximo passo de aprendizado</li>
+    </ul>
+  </div>
+
+  <h3>Resumo dos conceitos aprendidos nas 3 apostilas</h3>
+
+  <table>
+    <thead>
+      <tr><th>Categoria</th><th>O que você aprendeu</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>HTML</strong></td><td>Semântica, boilerplate, formulários, atributos, âncoras</td></tr>
+      <tr><td><strong>CSS — Base</strong></td><td>Reset, variáveis (<ic>:root</ic>), box-model, unidades relativas</td></tr>
+      <tr><td><strong>CSS — Layout</strong></td><td>Flexbox, CSS Grid, position (relative/absolute/fixed)</td></tr>
+      <tr><td><strong>CSS — Visual</strong></td><td>Gradientes, box-shadow, border-radius, backdrop-filter</td></tr>
+      <tr><td><strong>CSS — Motion</strong></td><td>transition, @keyframes, animation, animation-delay</td></tr>
+      <tr><td><strong>CSS — Responsivo</strong></td><td>Media queries, breakpoints, mobile-first thinking</td></tr>
+      <tr><td><strong>JavaScript</strong></td><td>querySelector, addEventListener, classList, IntersectionObserver</td></tr>
+      <tr><td><strong>JavaScript</strong></td><td>Template literals, encodeURIComponent, setTimeout</td></tr>
+      <tr><td><strong>Organização</strong></td><td>Arquivos separados por responsabilidade, nomenclatura BEM</td></tr>
+      <tr><td><strong>Deploy</strong></td><td>GitHub, Vercel, domínio customizado, HTTPS automático</td></tr>
+    </tbody>
+  </table>
+</section>
+
+</div><!-- end .content -->
+
+<footer class="apo-footer">
+  <span>♞ <span class="fl">Checkmate Gestão</span> — Material de Aula</span>
+  <span>Módulo 03 · Animações · JavaScript · Deploy</span>
+  <span style="color:#555;">Série completa — 3 módulos · 19 aulas</span>
+</footer>
+
+</body>
+</html>

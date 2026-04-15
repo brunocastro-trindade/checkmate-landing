@@ -1,420 +1,491 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkmate Gestão - Tráfego Pago que Converte</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap"
-    rel="stylesheet"
-    />
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet" />
 
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/hero.css">
     <link rel="stylesheet" href="css/services.css">
-    <link rel="stylesheet" href="css/footbar.css">
     <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/cases.css">
     <link rel="stylesheet" href="css/contact.css">
-</head>
-
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/responsive.css">
 
 <body>
 
-<header class="navbar">
-    <div class="container navbar__inner">
-        <!--Logo do cavalim-->
-        <a href="#inicio" class="navbar__logo">
-            <span class="navbar__logo-icon">♞</span>
-            <span class="navbar__logo-text">
-                Checkmate <strong>Gestão</strong>
-            </span>
-        </a>
+    <header class="navbar">
+        <div class="container navbar__inner">
+            <!--Logo do cavalim-->
+            <a href="#inicio" class="navbar__logo">
+                <span class="navbar__logo-icon">♞</span>
+                <span class="navbar__logo-text">
+                    Checkmate <strong>Gestão</strong>
+                </span>
+            </a>
 
-        <nav class="navbar__nav">
-            <a href="#servicos">Serviços</a>
-            <a href="#sobre">Sobre</a>
-            <a href="#cases">Cases</a>
-            <a href="#contato">Contato</a>
-        </nav>
+            <nav class="navbar__nav">
+                <a href="#servicos">Serviços</a>
+                <a href="#sobre">Sobre</a>
+                <a href="#cases">Cases</a>
+                <a href="#contato">Contato</a>
+            </nav>
 
-        <a href="#contato" class="btn btn--primary">
-            Falar com o especialista
-        </a>
-    </div>    
-</header>
-
-<main>
-
-    <!--parte 1:hero-->
-<section class="hero" id="inicio">
-    <div class="container hero__inner">
-        <div class="hero__content">
-            <span class="hero__tag">
-                ♞ Gestão de Tráfego Pago  
-            </span>
-
-            <h1 class="hero__title">
-                Tráfego que <em>converte</em>,
-                resultados que <em>escalam</em>
-            </h1>
-
-            <p class="hero__subtitle">
-                Gerenciamos suas campanhas no Meta Ads e Google Ads
-                com estratégia, criativos de alto impacto e 
-                otimização continua para maximizar o seu ROI.
-            </p>
-
-            <div class="hero__actions">
-                <a href="#contato" class="btn btn--ghost">
-                    Ver serviços ↓
-                </a>
-            </div>
-
-            <div class="hero__stats">
-                <div class="hero__stat">
-                    <strong>+50</strong>
-                    <span>clientes atendidos</span>
-                </div>
-                <div class="hero__stat">
-                    <strong>3,8x</strong>
-                    <span>ROAS médio</span>
-                </div>
-                <div class="hero__stat">
-                    <strong>Meta e Google</strong>
-                    <span>plataformas gerenciadas</span>
-                </div>
-            </div>
-
+            <a href="#contato" class="btn btn--primary">
+                Falar com o especialista
+            </a>
         </div>
+    </header>
 
-        <div class="hero__images">
-            <div class="hero__image-placeholder">
-                <span>♞</span>
-                <p>
-                    <figure>
-                        <img src="assets/images/ctr.jpg" alt="ctr alto" width="400" height="400">
-                    </figure>
-                    <figure>
-                        <img src="assets/images/insta.jpg" alt="instagram">
-                    </figure>
-            </div>
-        </div>
-    </div>
-</section>
+    <main>
 
-    <!--parte 2:serviços-->
-<section class="services" id="servicos">
-    <div class="container">
+        <!--parte 1:hero-->
+        <section class="hero" id="inicio">
+            <div class="container hero__inner">
+                <div class="hero__content">
+                    <span class="hero__tag">
+                        ♞ Gestão de Tráfego Pago
+                    </span>
 
-        <div class="section-header">
-            <span class="section-tag">O que fazemos</span>
-            <h2 class="section-title">
-                Serviços completos da gestão de perfomance
-            </h2>
-            <p class="section-subtitle">
-                Da estratégia ao criativo, do tráfego à conversão.
-                Cuidamos de cada etapa da sua presença paga. 
-            </p>
-        </div>
+                    <h1 class="hero__title">
+                        Tráfego que <em>converte</em>,
+                        resultados que <em>escalam</em>
+                    </h1>
 
-        <div class="servicos__grid"></div>
+                    <p class="hero__subtitle">
+                        Gerenciamos suas campanhas no Meta Ads e Google Ads
+                        com estratégia, criativos de alto impacto e
+                        otimização continua para maximizar o seu ROI.
+                    </p>
 
-        <div class="service-grid">
-            <div class="service-card">
-                <div class="service-card__icon">
-                    <img src="assets/icons/meta.svg" alt="Meta ads" height="100" width="100"/>
-                </div>
-                <h3>Meta Ads</h3>
-                <p>Campanhas no Facebook e Instragam com segmentação
-                    avançada, testes A/B e criativos otimizados para gerar leads e vendas com o menor custo possível.</p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-card__icon">
-                    <img src="assets/icons/googleads.svg" alt="Google Ads" width="100" height="100" />
-                </div>
-                <h3>Google Ads</h3>
-                <p>
-                    Search, Display e Perfomance Max com foco em
-                    conversão. Capturamos o momento certo em que
-                    o cliente já está procurando pelo seu produto.
-                </p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-card__icon">
-                    <img src="assets/icons/creative.svg" alt="Criativos" height="100" width="100" />
-                </div>
-
-                <h3>Criação de Criativos</h3>
-                <p>
-                    Design de peças estáticas e animadas, roteiros persuasivos e artes que param o scroll e comunicam sua proposta com clareza.
-                </p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-card__icon">
-                    <img src="assets/icons/video.svg" alt="Edição de Vídeo" width="100" height="100">
-                </div>
-                <h3>Edição de Vídeos</h3>
-                <p>
-                    Edição profissional de vídeos para anúncios, Reels e stories. Conteúdo que engaja e venda nos primeiros 3 segundos.
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-
-    <!--parte 3:sobre-->
-<section class="about" id="sobre">
-    <div class="container about__inner">
-
-        <div class="about__media">
-            <div class="about__image-wrap">
-
-                <img
-                src="assets/images/sobre.jpg"
-                alt="Localização"
-                class="about__image"
-                />
-
-                <div class="about__badge">
-                    <strong>+3 anos</strong>
-                    <span>de experiência em tráfego</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="about__content">
-            <span class="section-tag">Sobre nós</span>
-
-            <h2 class="section-title" style="text-align: left;">
-                Estratégia que vem de quem entende o jogo.
-            </h2>
-
-            <p class="about__text">
-                A Checkmate Gestão nasceu da combinação entre análise de dados e criatividade. Cada campanha é tratada
-                como uma partida de xadrez: planejada com antecedência, executada com precisão e ajustada em tempo real.
-            </p>
-
-            <ul class="about__features">
-                <li>
-                    <span class="about__feature-icon">♟</span>
-                    <div>
-                        <strong>Gestão estratégica de campanhas</strong>
-                        <p>Planejamento, execução e otimização continua no Meta e Google Ads.</p>
-                    </div>
-                </li>
-                <li>
-                    <span class="about__feature-icon">♟</span>
-                    <div>
-                        <strong>Criativos que Convertem</strong>
-                        <p>Design e edição de vídeo focados em perfomance, não só estética.</p>
-                    </div>
-                </li>
-                <li>
-                    <span class="about__feature-icon">♟</span>
-                    <div>
-                        <strong>Relatórios transparentes</strong>
-                        <p>Relatórios semanais com dados reais: custo, leads e ROAS.</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-
-    </div>
-</section>
-
-
-<section class="cases" id="cases">
-    <div class="container">
-
-        <div class="section-header">
-            <span class="section-tag">Cases reais</span>
-            <h2 class="section-title">Resultados que falam por si</h2>
-            <p class="section-subtitle">
-                Números reais de clientes.
-                Sem invenção, sem estimativas.
-            </p>
-        </div>
-
-        <div class="cases__grid">
-           
-            <article class="case-card">
-                <div class="case-card__header">
-                    <span class="case-card__niche">E-commerce . Moda</span>
-                    <span class="case-card__platform">Meta Ads</span>
-                </div>
-                <h3 class="case-card__title">Loja de roupas femininas</h3>
-                <div class="case-card__metrics">
-                    <div class="metric">
-                        <strong>4.2x</strong>
-                        <span>ROAS</span>
-                    </div>
-                    <div class="metric">
-                        <strong>R$ 8,40</strong>
-                        <span>Custo por Venda</span>
-                    </div>
-                <div class="metric">
-                    <strong>+210%</strong>
-                    <span>Crescimento em 90 dias</span>
-                </div>
-                </div>
-                <p class="case-card__desc">
-                    Reestruturamos as campanhas, criamos novos
-                    criativos em vídeo e segmentamos públicos
-                    lookalike. Em 3 meses, quadruplicamos o ROAS.
-                </p>
-            </article>
-
-            <article class="case-card">
-                <div class="case-card__header">
-                    <span class="case-card__niche">Serviços . Odontologia</span>
-                    <span class="case-card__platform">Google Ads</span>
-                </div>
-                <h3 class="case-card__title">Clínica odontológica</h3>
-                <div class="case-card__metrics">
-                    <div class="metric">
-                        <strong>R$12,00</strong>
-                        <span>Custo por lead</span>
+                    <div class="hero__actions">
+                        <a href="#contato" class="btn btn--ghost">
+                            Ver serviços ↓
+                        </a>
                     </div>
 
-                <div class="metric">
-                    <strong>143</strong>
-                    <span>Leads em 1º mês</span>
+                    <div class="hero__stats">
+                        <div class="hero__stat">
+                            <strong>+50</strong>
+                            <span>clientes atendidos</span>
+                        </div>
+                        <div class="hero__stat">
+                            <strong>3,8x</strong>
+                            <span>ROAS médio</span>
+                        </div>
+                        <div class="hero__stat">
+                            <strong>Meta e Google</strong>
+                            <span>plataformas gerenciadas</span>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="metric">
-                    <strong>68%</strong>
-                    <span>Taxa de agendamento</span>
-                </div>
-                </div>
-
-                <p class="case-card__desc">
-                    Estruturamos campanhas de Search com extensões
-                    de chamada e localização. Resultado: agenda 
-                    lotada já no primeiro mês de gestão.
-                </p>
-            </article>
-        
-        <article class="case-card">
-            <div class="case-card__header">
-                <span class="case-card__niche">Infoproduto . Cursos</span>
-                <span class="case-card__platform--both">Meta + Google</span>
-            </div>
-
-            <h3 class="case-card__title">Curso online de finanças</h3>
-            <div class="case-card__metrics">
-                <div class="metric">
-                    <strong>5.8x</strong>
-                    <span>ROAS</span>
-                </div>
-                <div class="metric">
-                    <strong>R$ 4,20</strong>
-                    <span>Custo por lead</span>
-                </div>
-                <div class="metric">
-                    <strong>R$ 47k</strong>
-                    <span>Faturamento no lançamento</span>
+                <div class="hero__images">
+                    <div class="hero__image-placeholder">
+                        <span>♞</span>
+                        <p>
+                        <figure>
+                            <img src="assets/images/ctr.jpg" alt="ctr alto" width="400" height="400">
+                        </figure>
+                        <figure>
+                            <img src="assets/images/insta.jpg" alt="instagram">
+                        </figure>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <p class="case-card__desc">
-                Estratégia multi-plataforma com funil completo:
-            tráfego frio no Meta para captura + remarketing
-                no Google para conversão na página de vendas.
-            </p>
-        </article>
-        
-        
-        
-        </div>
-    </div>
-</section>
-<section class="contact" id="contato">
-    <div class="container contact__inner">
+        <!--parte 2:serviços-->
+        <section class="services" id="servicos">
+            <div class="container">
 
-        <div class="contact__info">
-            <span class="section-tag">Fale conosco</span>
-            <h2 class="section-title" style="text-align: left;">
-                Pronto para fazer o movimento certo?
-            </h2>
-            <p>
-                Preencha o formulário e entraremos em contato
-                em até 24 horas com uma análise gratuita
-                das suas campanhas atuais.
-            </p>
-
-            <div class="contact__direct">
-                <a href=" https://wa.me/554797530502" class="contact__link" target="_blank">
-                    <span class="contact__link-icon">📱</span>
-                    <span>(47) 997530502</span>
-                </a>
-                <a href="mailto:castrotrindade2929@gmail.com" class="contact__link">
-                    <span class="contact__link-icon">✉️</span>
-                    <span>castrotrindade2929@gmail.com</span>
-                </a>
-        </div>
-        </div>
-             
-        <div class="contact__form-wrap">
-            <form class="contact__form" id="contactForm">
-
-                <div class="form-group">
-                    <label for="name">Seu nome</label>
-                    <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    placeholder="Ex: João Silva"
-                    required
-                    />
+                <div class="section-header">
+                    <span class="section-tag">O que fazemos</span>
+                    <h2 class="section-title">
+                        Serviços completos da gestão de perfomance
+                    </h2>
+                    <p class="section-subtitle">
+                        Da estratégia ao criativo, do tráfego à conversão.
+                        Cuidamos de cada etapa da sua presença paga.
+                    </p>
                 </div>
 
-                <div class="form-group">
-                    <label for="whatsapp">WhatsApp</label>
-                    <input
-                    type="tel"
-                    id="whatsapp"
-                    name="whatsapp"
-                    placeholder="(XX) 9XXXX-XXXX"
-                    required
-                    />
+                <div class="servicos__grid"></div>
+
+                <div class="service-grid">
+                    <div class="service-card">
+                        <div class="service-card__icon">
+                            <img src="assets/icons/meta.svg" alt="Meta ads" height="100" width="100" />
+                        </div>
+                        <h3>Meta Ads</h3>
+                        <p>Campanhas no Facebook e Instragam com segmentação
+                            avançada, testes A/B e criativos otimizados para gerar leads e vendas com o menor custo
+                            possível.</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-card__icon">
+                            <img src="assets/icons/googleads.svg" alt="Google Ads" width="100" height="100" />
+                        </div>
+                        <h3>Google Ads</h3>
+                        <p>
+                            Search, Display e Perfomance Max com foco em
+                            conversão. Capturamos o momento certo em que
+                            o cliente já está procurando pelo seu produto.
+                        </p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-card__icon">
+                            <img src="assets/icons/creative.svg" alt="Criativos" height="100" width="100" />
+                        </div>
+
+                        <h3>Criação de Criativos</h3>
+                        <p>
+                            Design de peças estáticas e animadas, roteiros persuasivos e artes que param o scroll e
+                            comunicam sua proposta com clareza.
+                        </p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-card__icon">
+                            <img src="assets/icons/video.svg" alt="Edição de Vídeo" width="100" height="100">
+                        </div>
+                        <h3>Edição de Vídeos</h3>
+                        <p>
+                            Edição profissional de vídeos para anúncios, Reels e stories. Conteúdo que engaja e venda
+                            nos primeiros 3 segundos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--parte 3:sobre-->
+        <section class="about" id="sobre">
+            <div class="container about__inner">
+
+                <div class="about__media">
+                    <div class="about__image-wrap">
+
+                        <img src="assets/images/sobre.jpg" alt="Localização" class="about__image" width="60"
+                            height="60" />
+
+                        <div class="about__badge">
+                            <strong>+3 anos</strong>
+                            <span>de experiência em tráfego</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="service">Servico de Interesse</label>
-                    <select id="service" name="service">
-                        <option value="">Selecione um serviço</option>
-                        <option value="meta">Meta Ads (Facebook/Instagram)</option>
-                        <option value="google">Google Ads</option>
-                        <option value="criativos">Criação de Criativos</option>
-                        <option value="video">Edição de Vídeos</option>
-                        <option value="completo">Gestão Completa</option>
-                    </select>
+                <div class="about__content">
+                    <span class="section-tag">Sobre nós</span>
+
+                    <h2 class="section-title" style="text-align: left;">
+                        Estratégia que vem de quem entende o jogo.
+                    </h2>
+
+                    <p class="about__text">
+                        A Checkmate Gestão nasceu da combinação entre análise de dados e criatividade. Cada campanha é
+                        tratada
+                        como uma partida de xadrez: planejada com antecedência, executada com precisão e ajustada em
+                        tempo real.
+                    </p>
+
+                    <ul class="about__features">
+                        <li>
+                            <span class="about__feature-icon">♟</span>
+                            <div>
+                                <strong>Gestão estratégica de campanhas</strong>
+                                <p>Planejamento, execução e otimização continua no Meta e Google Ads.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="about__feature-icon">♟</span>
+                            <div>
+                                <strong>Criativos que Convertem</strong>
+                                <p>Design e edição de vídeo focados em perfomance, não só estética.</p>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="about__feature-icon">♟</span>
+                            <div>
+                                <strong>Relatórios transparentes</strong>
+                                <p>Relatórios semanais com dados reais: custo, leads e ROAS.</p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="form-group">
-                    <label form="message">Conte sobre seu negócio <span>(opcional)</span></label>
-                    <textarea
-                    id="message"
-                    name="message"
-                    rows="3"
-                    placeholder="Segmento, orçamento mensal, obejtivo..."
-                    ></textarea>
+
+            </div>
+        </section>
+
+
+        <section class="cases" id="cases">
+            <div class="container">
+
+                <div class="section-header">
+                    <span class="section-tag">Cases reais</span>
+                    <h2 class="section-title">Resultados que falam por si</h2>
+                    <p class="section-subtitle">
+                        Números reais de clientes.
+                        Sem invenção, sem estimativas.
+                    </p>
                 </div>
 
-                <button type="submit" class="btn btn--primary btn--full">
-                    Solicitar proposta gratuita →
-                </button>
+                <div class="cases__grid">
 
-            </form>
-        </div>
-    </div>
-</section>
-</main>
+                    <article class="case-card">
+                        <div class="case-card__header">
+                            <span class="case-card__niche">E-commerce . Moda</span>
+                            <span class="case-card__platform">Meta Ads</span>
+                        </div>
+                        <h3 class="case-card__title">Loja de roupas femininas</h3>
+                        <div class="case-card__metrics">
+                            <div class="metric">
+                                <strong>4.2x</strong>
+                                <span>ROAS</span>
+                            </div>
+                            <div class="metric">
+                                <strong>R$ 8,40</strong>
+                                <span>Custo por Venda</span>
+                            </div>
+                            <div class="metric">
+                                <strong>+210%</strong>
+                                <span>Crescimento em 90 dias</span>
+                            </div>
+                        </div>
+                        <p class="case-card__desc">
+                            Reestruturamos as campanhas, criamos novos
+                            criativos em vídeo e segmentamos públicos
+                            lookalike. Em 3 meses, quadruplicamos o ROAS.
+                        </p>
+                    </article>
+
+                    <article class="case-card">
+                        <div class="case-card__header">
+                            <span class="case-card__niche">Serviços . Odontologia</span>
+                            <span class="case-card__platform">Google Ads</span>
+                        </div>
+                        <h3 class="case-card__title">Clínica odontológica</h3>
+                        <div class="case-card__metrics">
+                            <div class="metric">
+                                <strong>R$12,00</strong>
+                                <span>Custo por lead</span>
+                            </div>
+
+                            <div class="metric">
+                                <strong>143</strong>
+                                <span>Leads em 1º mês</span>
+                            </div>
+
+                            <div class="metric">
+                                <strong>68%</strong>
+                                <span>Taxa de agendamento</span>
+                            </div>
+                        </div>
+
+                        <p class="case-card__desc">
+                            Estruturamos campanhas de Search com extensões
+                            de chamada e localização. Resultado: agenda
+                            lotada já no primeiro mês de gestão.
+                        </p>
+                    </article>
+
+                    <article class="case-card">
+                        <div class="case-card__header">
+                            <span class="case-card__niche">Infoproduto . Cursos</span>
+                            <span class="case-card__platform--both">Meta + Google</span>
+                        </div>
+
+                        <h3 class="case-card__title">Curso online de finanças</h3>
+                        <div class="case-card__metrics">
+                            <div class="metric">
+                                <strong>5.8x</strong>
+                                <span>ROAS</span>
+                            </div>
+                            <div class="metric">
+                                <strong>R$ 4,20</strong>
+                                <span>Custo por lead</span>
+                            </div>
+                            <div class="metric">
+                                <strong>R$ 47k</strong>
+                                <span>Faturamento no lançamento</span>
+                            </div>
+                        </div>
+
+                        <p class="case-card__desc">
+                            Estratégia multi-plataforma com funil completo:
+                            tráfego frio no Meta para captura + remarketing
+                            no Google para conversão na página de vendas.
+                        </p>
+                    </article>
+
+
+
+                </div>
+            </div>
+        </section>
+        <section class="contact" id="contato">
+            <div class="container contact__inner">
+
+                <div class="contact__info">
+                    <span class="section-tag">Fale conosco</span>
+                    <h2 class="section-title" style="text-align: left;">
+                        Pronto para fazer o movimento certo?
+                    </h2>
+                    <p>
+                        Preencha o formulário e entraremos em contato
+                        em até 24 horas com uma análise gratuita
+                        das suas campanhas atuais.
+                    </p>
+
+                    <div class="contact__direct">
+                        <a href=" https://wa.me/554797530502" class="contact__link" target="_blank">
+                            <span class="contact__link-icon">📱</span>
+                            <span>(47) 997530502</span>
+                        </a>
+                        <a href="mailto:castrotrindade2929@gmail.com" class="contact__link">
+                            <span class="contact__link-icon">✉️</span>
+                            <span>castrotrindade2929@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact__form-wrap">
+                    <form class="contact__form" id="contactForm">
+
+                        <div class="form-group">
+                            <label for="name">Seu nome</label>
+                            <input type="text" id="name" name="name" placeholder="Ex: João Silva" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(XX) 9XXXX-XXXX" required />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="service">Servico de Interesse</label>
+                            <select id="service" name="service">
+                                <option value="">Selecione um serviço</option>
+                                <option value="meta">Meta Ads (Facebook/Instagram)</option>
+                                <option value="google">Google Ads</option>
+                                <option value="criativos">Criação de Criativos</option>
+                                <option value="video">Edição de Vídeos</option>
+                                <option value="completo">Gestão Completa</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label form="message">Conte sobre seu negócio <span>(opcional)</span></label>
+                            <textarea id="message" name="message" rows="3"
+                                placeholder="Segmento, orçamento mensal, obejtivo..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn--primary btn--full">
+                            Solicitar proposta gratuita →
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__top">
+                    <div class="footer__brand">
+                        <a href="#inicio" class="footer__logo">
+                            <span>♞</span> Checkmate <strong>Gestão</strong>
+                        </a>
+                        <p>
+                            Tráfego pago com estratégia,
+
+                            criativos e resultados reais.
+                        </p>
+
+                        <div class="footer__socials">
+                            <a href="https://instagram.com/checkmate.gestao" target="_blank" aria-label="Instagram">
+                                <img src="assets/icons/instagram-167-svgrepo-com.svg" alt="Instagram" width="20" />
+                            </a>
+                            <a href="https://wa.me/5547997530502" target="_blank" aria-label="WhatsApp">
+                                <img src="assets/icons/whatsapp-logo-variant-svgrepo-com.svg" alt="WhatsApp"
+                                    width="20" />
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn">
+                                <img src="assets/icons/linkedin-161-svgrepo-com.svg" alt="LinkedIn" width="20" />
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="footer__col">
+                        <h4>Serviços</h4>
+                        <ul>
+                            <li><a href="#servicos">Meta Ads</a></li>
+                            <li><a href="#servicos">Google Ads</a></li>
+                            <li><a href="#servicos">Criação de Criativos</a></li>
+                            <li><a href="#servicos">Edição de Vídeos</a></li>
+                        </ul>
+                    </div>
+
+
+                    <div class="footer__col">
+                        <h4>Empresas</h4>
+                        <ul>
+                            <li><a href="#sobre">Sobre nós</a></li>
+                            <li><a href="#cases">Cases</a></li>
+                            <li><a href="#contato">Contato</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="footer__bottom">
+                    <span>© 2025 Checkmate Gestão. Todos os direitos reservados.</span>
+                    <span>Deselvovido com HTML & CSS ♞</span>
+                </div>
+            </div>
+        </footer>
+
+        <script>
+
+            const form = document.getElementById('contactForm');
+
+            const WHATSAPP_NUMBER = '5547997530502';
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const name = document.getElementById('name').valeu;
+                const whatsapp = document.getElementById('whatsapp').value;
+                const service = document.getElementById('service').value;
+                const messafe = document.getElementById('message').value;
+
+                const text = `Olá! Meu nome é ${name}.
+    WhatsApp: ${whatsapp}
+    Interesse: ${service || 'Não informado'}
+    Mensagem: ${message || 'Sem mensagem adicional'}`;
+
+                const encodedText = encodeURIComponent(text);
+
+                const utl = `https://wa.me/$[WHATSAPP_NUMBER]?text-${encodedText}`;
+                window.open(url, '_blank');
+
+            });
+        </script>
+
 </body>
+
 </html>

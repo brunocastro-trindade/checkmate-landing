@@ -1,0 +1,58 @@
+@keyframes fadeup {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideRight {
+    from { opacity: 0; transform: translateX(-24px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%  { transform: translateY(-8px); }
+}
+
+
+.hero__tag {
+    animation: fadeUp 0.6s ease-out 0s both;
+}
+
+.hero__title {
+    animation: fadeUp 0.7s ease-out 0.2s both;
+}
+
+.hero__subtitle {
+    animation: fadeUp 0.6s ease-out 0.4s both;
+}
+
+.hero__actions {
+    animation: fadeUp 0.6s ease-out 0.6s both;
+}
+
+.hero__stats {
+    animation: fadeUp 0.6s ease-out 0.8s both;
+}
+
+.hero__image-placeholder {
+    animation: scaleIn 0.8s ease-out 0.3s both;
+}
+
+.hero__image-placeholder span {
+    animation: float 3s ease-out infinite;
+}
+
+
+.navbar {
+    animation: fade;
+}

@@ -1,0 +1,103 @@
+
+@media (max-width: 1023px) {
+
+  /* Navbar: oculta links, mantém logo e CTA */
+  .navbar__nav  { display: none; }
+
+  /* Hero: empilha as colunas */
+  .hero__inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .hero__subtitle  { max-width: 100%; }
+  .hero__actions   { justify-content: center; }
+  .hero__stats     { justify-content: center; }
+  .hero__image     { display: none; } /* esconde imagem no tablet */
+
+  /* Serviços: 4 colunas → 2 colunas */
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Sobre: empilha */
+  .about__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .about__badge { right: 20px; }
+
+  /* Cases: 3 colunas → 1 coluna */
+  .cases__grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Contato: empilha */
+  .contact__inner {
+    grid-template-columns: 1fr;
+  }
+
+  /* Footer: reorganiza colunas */
+  .footer__top {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer__brand {
+    grid-column: 1 / -1;  /* ocupa toda a largura */
+  }
+}
+
+
+/* ===========================================
+   MOBILE — max-width: 767px
+   =========================================== */
+@media (max-width: 767px) {
+
+  /* Tamanhos de fonte menores */
+  .hero__title   { font-size: var(--text-3xl); }
+  .section-title { font-size: var(--text-2xl); }
+
+  /* Navbar: botão CTA menor */
+  .navbar__inner { height: 60px; }
+  .btn--primary { font-size: 12px; padding: 0.5rem 0.9rem; }
+
+  /* Serviços: 2 → 1 coluna */
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hero: ajusta padding (navbar menor) */
+  .hero {
+    padding-top: calc(60px + var(--space-xl));
+  }
+
+  /* Hero: ações empilhadas */
+  .hero__actions {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .btn--ghost, .btn--primary { width: 100%; justify-content: center; }
+
+  /* Stats do hero: scroll horizontal */
+  .hero__stats {
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  /* Sobre: reduz imagem */
+  .about__image  { height: 280px; }
+  .about__badge  { right: 12px; bottom: 12px; }
+
+  /* Contato: form sem padding lateral extra */
+  .contact__form-wrap { padding: var(--space-md); }
+
+  /* Footer: empilha tudo */
+  .footer__top    { grid-template-columns: 1fr; }
+  .footer__bottom { flex-direction: column; text-align: center; }
+
+  /* Container: padding menor */
+  .container { padding: 0 var(--space-md); }
+}

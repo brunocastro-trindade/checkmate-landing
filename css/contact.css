@@ -44,3 +44,38 @@
     gap: 6px;
     margin-bottom: var(--space-md);
 }
+
+.form-group label span { color: var(--color-tex-light); font-weight: 400; }
+
+.contact__form input,
+.contact__form select,
+.contact__form textarea {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border: 1px solid var(--color-gray-2);
+    border-radius: var(--radius);
+    font-family: var(--text-sm);
+    background: var(--color-white);
+    color: var(--color-text);
+    transition: border-color 0.2 ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.contact__form input:focus,
+.contact__form select:focus,
+.contact__form textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
+}
+
+.contact__form textarea{
+resize:vertical;
+min-height: 90px;
+}
+
+.btn--full {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem;
+    font-size: var(--text-base);
+}
