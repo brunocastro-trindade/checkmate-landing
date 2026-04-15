@@ -1,0 +1,21 @@
+.contact {
+    padding: var(--space-2x1) 0;
+    background-color: var(--color-white);
+}
+
+.contact__inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-x1);
+    align-items: start;
+}
+
+.contact__info .section-title { text-align: left; margin-bottom: var(--space-md); }
+.contact__info p { color: var(--color-text-light); margin-bottom: var(--space-lg); }
+
+.contact__direct {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
