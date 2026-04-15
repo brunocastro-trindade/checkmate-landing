@@ -19,3 +19,28 @@
     gap: var(--space-sm);
 }
 
+.contact__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: var(--text-sm);
+    color: var(--color-text);
+    transition: color 0.2s;
+}
+
+.contact__link:hover { color: var(--color-primary); }
+.contact__link-icon { font-size: 1.1rem; }
+
+.contact__form-wrap {
+    background: var(--color-gray);
+    border: 1px solid var(--color-gray-2);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: var(--space-md);
+}
