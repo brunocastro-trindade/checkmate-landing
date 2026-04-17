@@ -74,3 +74,17 @@
     transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(200, 16, 40, 0.35);
 }
+
+.navbar.scrolled {
+    background-color: rgba(13, 13, 13, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+.navbar {
+    transition: background-color 0.3s ease,
+                border-bottom-color 0.3s ease,
+                box-shadow 0.3s ease;
+}
