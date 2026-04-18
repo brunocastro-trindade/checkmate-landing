@@ -42,8 +42,24 @@
             <a href="#contato" class="btn btn--primary">
                 Falar com o especialista
             </a>
+
+            <!--Botão hamburguer (visivel só no mobile)-->
+            <button class="hamburguer" id="hamburguer" aria-label="Abrir menu">
+                <span class="hamburguer__line"></span>
+                <span class="hamburguer__line"></span>
+                <span class="hamburguer__line"></span>
+            </button>
         </div>
     </header>
+
+    <nav class="navbar__mobile-menu" id="mobileMenu">
+        <a href="#servicos">Serviços</a>
+        <a href="#sobre">Sobre</a>
+        <a href="#cases">Cases</a>
+        <a href="#contato">Contato</a>
+        <a href="#contato" class="btn btn--primary">Falar com especialista</a>
+    </nav>
+
 
     <main>
 
@@ -459,32 +475,7 @@
             </div>
         </footer>
 
-        <script>
-
-            const form = document.getElementById('contactForm');
-
-            const WHATSAPP_NUMBER = '5547997530502';
-
-            form.addEventListener('submit', function (event) {
-                event.preventDefault();
-
-                const name = document.getElementById('name').valeu;
-                const whatsapp = document.getElementById('whatsapp').value;
-                const service = document.getElementById('service').value;
-                const messafe = document.getElementById('message').value;
-
-                const text = `Olá! Meu nome é ${name}.
-    WhatsApp: ${whatsapp}
-    Interesse: ${service || 'Não informado'}
-    Mensagem: ${message || 'Sem mensagem adicional'}`;
-
-                const encodedText = encodeURIComponent(text);
-
-                const utl = `https://wa.me/$[WHATSAPP_NUMBER]?text-${encodedText}`;
-                window.open(url, '_blank');
-
-            });
-        </script>
+        <script src="js/app.js"></script>
 
 </body>
 
